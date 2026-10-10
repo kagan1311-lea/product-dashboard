@@ -23,6 +23,26 @@
     });
   }
 
+  // Spec: Done means / Should - search. Splits text around the first case-insensitive
+  // match of query, so the matched characters can be highlighted.
+  function highlightParts(text, query) {
+    var t = String(text == null ? '' : text);
+    var q = normalize(query);
+    var at = q ? t.toLowerCase().indexOf(q) : -1;
+    if (at === -1) return [{ text: t, match: false }];
+    return [
+      { text: t.slice(0, at), match: false },
+      { text: t.slice(at, at + q.length), match: true },
+      { text: t.slice(at + q.length), match: false }
+    ].filter(function (part) { return part.text; });
+  }
+
+  // Arrow-key movement through a list of `length` options, wrapping at both ends.
+  function moveIndex(current, delta, length) {
+    if (!length) return -1;
+    return (((current + delta) % length) + length) % length;
+  }
+
   var SOURCES = ['amazon', 'aliexpress', 'google_il'];
   var LOCAL = 'google_il';
 
@@ -159,6 +179,8 @@
   return {
     SOURCES: SOURCES,
     groupByCategory: groupByCategory,
+    highlightParts: highlightParts,
+    moveIndex: moveIndex,
     formatIls: formatIls,
     formatUsd: formatUsd,
     formatRate: formatRate,

@@ -29,6 +29,33 @@ test('empty or blank search returns all 15 products', () => {
   assert.equal(Logic.filterProducts(products, '   ').length, 15);
 });
 
+// Spec: Done means / Should - search
+test('highlight marks the typed characters inside the name', () => {
+  assert.deepEqual(Logic.highlightParts('איירפודס 4', 'איירפ'), [
+    { text: 'איירפ', match: true },
+    { text: 'ודס 4', match: false }
+  ]);
+});
+
+test('highlight is case-insensitive and keeps the original casing', () => {
+  assert.deepEqual(Logic.highlightParts('Samsung Galaxy S25', 's25'), [
+    { text: 'Samsung Galaxy ', match: false },
+    { text: 'S25', match: true }
+  ]);
+});
+
+test('highlight returns the whole text unmarked when there is no match or no query', () => {
+  assert.deepEqual(Logic.highlightParts('AirPods 4', 'xyz'), [{ text: 'AirPods 4', match: false }]);
+  assert.deepEqual(Logic.highlightParts('AirPods 4', ''), [{ text: 'AirPods 4', match: false }]);
+});
+
+test('arrow keys move through the list and wrap at both ends', () => {
+  assert.equal(Logic.moveIndex(0, 1, 3), 1);
+  assert.equal(Logic.moveIndex(2, 1, 3), 0);
+  assert.equal(Logic.moveIndex(0, -1, 3), 2);
+  assert.equal(Logic.moveIndex(0, 1, 0), -1);
+});
+
 // Spec: Done means / 2. Product not found
 test('search "נוקיה" returns no products', () => {
   assert.deepEqual(Logic.filterProducts(products, 'נוקיה'), []);

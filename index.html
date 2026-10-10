@@ -58,8 +58,10 @@
   .list[hidden], .notfound[hidden] { display: none; }
   .group { padding: 8px 14px 4px; font-size: 12px; color: var(--text-3); }
   .option { display: flex; justify-content: space-between; gap: 12px; padding: 8px 14px; cursor: pointer; }
-  .option:hover, .option.first { background: var(--blue-bg); }
+  .option.active { background: var(--blue-bg); }
   .option .cat { font-size: 12px; color: var(--text-2); }
+  .option .en { font-size: 12px; color: var(--text-2); }
+  .option mark { background: transparent; color: var(--blue); font-weight: 500; }
   .notfound { margin-top: 8px; padding: 10px 14px; border-radius: 8px; background: var(--red-bg); color: var(--red-text); font-size: 14px; display: flex; align-items: center; gap: 8px; }
 
   .alert { margin-top: 18px; padding: 14px 16px; border-radius: 12px; background: var(--red-bg); color: var(--red-text); }
@@ -137,7 +139,7 @@
     'מטענים': 'ti-battery-charging', 'כיסויים': 'ti-shield', 'מגיני מסך': 'ti-square'
   };
 
-  var state = { data: null, rate: null, rateLive: false, rateDate: null, results: [] };
+  var state = { data: null, rate: null, rateLive: false, rateDate: null, results: [], active: -1 };
   var el = {
     meta: document.getElementById('meta'),
     q: document.getElementById('q'),
@@ -194,22 +196,43 @@
     el.notfound.hidden = true;
 
     var html = '';
+    function marked(text) {
+      return Logic.highlightParts(text, query).map(function (part) {
+        return part.match ? '<mark>' + esc(part.text) + '</mark>' : esc(part.text);
+      }).join('');
+    }
     function option(p, i) {
-      return '<div class="option' + (i === 0 ? ' first' : '') + '" role="option" data-id="' + esc(p.id) + '">' +
-        '<span>' + esc(p.name_he) + '</span><span class="cat">' + esc(p.category) + '</span></div>';
+      // Show the English name only when it is what matched.
+      var hit = Logic.highlightParts(p.name_he, query).length > 1 || !query.trim();
+      return '<div class="option" role="option" id="opt-' + i + '" data-id="' + esc(p.id) + '">' +
+        '<span>' + marked(p.name_he) + (hit ? '' : ' <span class="en">' + marked(p.name_en) + '</span>') + '</span>' +
+        '<span class="cat">' + esc(p.category) + '</span></div>';
     }
     if (!query.trim()) {
       var i = 0;
+      state.results = [];
       Logic.groupByCategory(products).forEach(function (g) {
         html += '<div class="group">' + esc(g.category) + '</div>';
-        g.items.forEach(function (p) { html += option(p, i++); });
+        g.items.forEach(function (p) { state.results.push(p); html += option(p, i++); });
       });
-      state.results = products.slice();
     } else {
       state.results.forEach(function (p, i) { html += option(p, i); });
     }
     el.list.innerHTML = html;
     openList(true);
+    setActive(0);
+  }
+
+  function setActive(i) {
+    state.active = i;
+    var opts = el.list.querySelectorAll('.option');
+    for (var k = 0; k < opts.length; k++) opts[k].classList.toggle('active', k === i);
+    if (opts[i]) {
+      opts[i].scrollIntoView({ block: 'nearest' });
+      el.q.setAttribute('aria-activedescendant', opts[i].id);
+    } else {
+      el.q.removeAttribute('aria-activedescendant');
+    }
   }
 
   function select(id) {
@@ -224,10 +247,20 @@
   el.q.addEventListener('focus', renderSearch);
   el.q.addEventListener('input', renderSearch);
   el.q.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter' && !el.list.hidden && state.results.length) {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
       e.preventDefault();
-      select(state.results[0].id);
+      if (el.list.hidden) { renderSearch(); return; }
+      setActive(Logic.moveIndex(state.active, e.key === 'ArrowDown' ? 1 : -1, state.results.length));
+    } else if (e.key === 'Enter' && !el.list.hidden && state.results[state.active]) {
+      e.preventDefault();
+      select(state.results[state.active].id);
+    } else if (e.key === 'Escape') {
+      openList(false);
     }
+  });
+  el.list.addEventListener('mousemove', function (e) {
+    var opt = e.target.closest('.option');
+    if (opt) setActive(Number(opt.id.slice(4)));
   });
   el.list.addEventListener('mousedown', function (e) {
     var opt = e.target.closest('.option');
