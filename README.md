@@ -22,7 +22,7 @@ A static, single-page dashboard for a store selling phone and earbuds accessorie
 | Products and prices | [Apify](https://apify.com) — [Amazon](https://apify.com/junglee/amazon-crawler), [AliExpress](https://apify.com/kawsar/aliexpress-search-scraper), [Google Shopping](https://apify.com/scrapewise/google-shopping) (country `il`) | Actor results saved in `apify/raw/`, turned into `data.json` by `scripts/import-apify.js` |
 | USD/ILS rate and 30-day history | [Frankfurter API](https://frankfurter.dev) (free, no key) | Fetched live by the browser; falls back to the last rate in `data.json` |
 
-Each Apify run is capped at 50 results to stay within the free credit. If the credit runs out the dashboard keeps working with the last imported data.
+Each Apify run is capped at 50 results (3 per product) to stay within the free credit; a full round of the three actors costs about $0.75. If the credit runs out the dashboard keeps working with the last imported data. Not every product is found in every source — the dashboard shows "אין נתון" for a missing one.
 
 ## Getting started
 
@@ -44,22 +44,23 @@ npm test
 
 ## Updating the prices
 
-1. Run the three Apify actors with the inputs described in [SPEC.md](SPEC.md) (Where / Apify import) and save their results in `apify/raw/amazon.json`, `apify/raw/aliexpress.json` and `apify/raw/google_il.json`.
+1. Run the three Apify actors with the inputs described in [SPEC.md](SPEC.md) (Where / Apify import) — one search per product's `search_term`, 3 results each. The runs in this repo were made through the Apify MCP connector; Apify datasets need your account to read, so copy each run's items into `apify/raw/amazon.json`, `apify/raw/aliexpress.json` and `apify/raw/google_il.json` (each file records its run and dataset IDs).
 2. Rebuild `data.json`:
 
 ```bash
 npm run import
 ```
 
-The script picks, for every product and source, the first result that is the same model, new (not renewed/used) and not an accessory, converts AliExpress prices to USD, and prints which sources matched.
+The script picks, for every product and source, the first result whose title matches the product — in English, or in Hebrew through the same term dictionary the search box uses — that is new (not renewed/used) and priced in a known currency. AliExpress prices come in mixed currencies (USD, EUR, GBP, AUD…) and are converted to USD with Frankfurter. It prints which sources matched for each product and rebuilds the price history at today's rate.
 
 ## Project structure
 
 - `index.html` — page markup, styles and rendering
-- `logic.js` — pure dashboard logic (search, prices, decision, formatting), shared by the page and the tests
+- `logic.js` — pure dashboard logic (search and the Hebrew → English term dictionary, prices, decision, formatting), shared by the page, the import script and the tests
 - `data.json` — products, prices and price history
 - `scripts/import-apify.js` — builds `data.json` from the Apify results
 - `apify/input/`, `apify/raw/` — actor inputs and raw results
-- `tests/` — tests; `tests/fixtures/demo-data.json` is a fixed data set for the logic tests
+- `tests/` — tests; search tests use the catalog in `data.json`, price/decision tests use the fixed data set in `tests/fixtures/demo-data.json`, and import tests use real titles from Apify
+- `CLAUDE.md` — points Claude Code at the process and the spec
 - `SPEC.md` — what the dashboard is (and is not), design and acceptance criteria
 - `Practice.md` — how changes are made in this project

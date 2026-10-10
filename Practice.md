@@ -16,6 +16,9 @@ Read [SPEC.md](SPEC.md) before making any change.
 - Run all tests with `npm test` (Node's built-in test runner, no dependencies). Tests live in `tests/`; testable logic lives in `logic.js`, kept free of DOM and network code.
 - No API tokens or keys in the code or the repository — the site is public on GitHub Pages.
 - `data.json` must keep the exact structure described in the spec, so the switch to Google Sheets (stage 2) stays a one-line change.
+- Apify runs cost credit. Before every run, say which actor, how many results and the estimated cost, and wait for approval. Cap each run at 50 results and set a `maxTotalChargeUsd` limit.
+- Prices change only through the import: save the run's items in `apify/raw/`, then `npm run import`. Do not edit prices in `data.json` by hand. The product list in `data.json` is edited by hand and kept by the import.
+- The Hebrew → English term dictionary (`TERMS` in `logic.js`) serves both the search box and the import. When a Hebrew word is missing, add it there and add a test.
 
 ## Side door: bugs found along the way
 
