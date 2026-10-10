@@ -23,6 +23,23 @@
     });
   }
 
+  // Spec: Done means / Should - currency converter. Accepts "1,099" or " 249.5 ";
+  // anything else (empty, letters, negative) is null.
+  function parseAmount(text) {
+    var t = String(text == null ? '' : text).replace(/,/g, '').trim();
+    if (!/^\d+(\.\d+)?$|^\.\d+$/.test(t)) return null;
+    return Number(t);
+  }
+
+  // Converts a typed amount; direction 'usd' means the dollar field was typed.
+  // Returns the other field's text, rounded to cents/agorot, or '' when the input is not a number.
+  function convert(text, rate, direction) {
+    var amount = parseAmount(text);
+    if (amount == null || !rate) return '';
+    var result = direction === 'usd' ? amount * rate : amount / rate;
+    return (Math.round(result * 100) / 100).toFixed(2);
+  }
+
   // Spec: Done means / Should - search. Splits text around the first case-insensitive
   // match of query, so the matched characters can be highlighted.
   function highlightParts(text, query) {
@@ -179,6 +196,8 @@
   return {
     SOURCES: SOURCES,
     groupByCategory: groupByCategory,
+    parseAmount: parseAmount,
+    convert: convert,
     highlightParts: highlightParts,
     moveIndex: moveIndex,
     formatIls: formatIls,

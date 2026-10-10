@@ -97,6 +97,17 @@
   .bar div { height: 100%; border-radius: 3px; background: var(--blue); }
   .bar.local div { background: var(--gray-bar); }
 
+  .extras { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 12px; }
+  .card-title { display: flex; align-items: center; gap: 6px; font-weight: 500; margin-bottom: 10px; }
+  .card-title i { font-size: 18px; color: var(--text-2); }
+  .conv { display: flex; align-items: center; gap: 8px; }
+  .conv > i { color: var(--text-3); font-size: 18px; }
+  .conv label { flex: 1; min-width: 0; display: flex; align-items: center; gap: 6px; height: 40px; padding: 0 10px; border: 1px solid var(--border-strong); border-radius: 8px; background: var(--surface); }
+  .conv label:focus-within { border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-bg); }
+  .conv label span { color: var(--text-2); }
+  .conv input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--text); font: inherit; font-size: 17px; font-weight: 500; text-align: left; }
+  .card > .sub { margin-top: 8px; }
+
   .banner { display: flex; align-items: center; gap: 12px; margin-top: 14px; padding: 14px 16px; border-radius: 12px; }
   .banner i { font-size: 24px; }
   .banner b { display: block; }
@@ -329,6 +340,17 @@
     });
     html += '</div>';
 
+    // converter
+    var abroad = Logic.cheapestAbroad(rows);
+    var usd = abroad ? String(abroad.price_usd) : '';
+    html += '<div class="extras"><div class="card">' +
+      '<div class="card-title"><i class="ti ti-arrows-exchange" aria-hidden="true"></i>ממיר מטבע</div>' +
+      '<div class="conv">' +
+      '<label><span>$</span><input id="conv-usd" type="text" inputmode="decimal" dir="ltr" aria-label="סכום בדולרים" value="' + esc(usd) + '"></label>' +
+      '<i class="ti ti-arrows-left-right" aria-hidden="true"></i>' +
+      '<label><span>₪</span><input id="conv-ils" type="text" inputmode="decimal" dir="ltr" aria-label="סכום בשקלים" value="' + esc(Logic.convert(usd, state.rate, 'usd')) + '"></label>' +
+      '</div><div class="sub">לפי שער ' + num(Logic.formatRate(state.rate)) + '</div></div></div>';
+
     // decision banner
     var b;
     if (decision.type === 'abroad') {
@@ -352,6 +374,13 @@
     return '<div class="kpi"><div class="label">' + label + '</div><div class="value' + (tone ? ' ' + tone : '') + '">' + value + '</div>' +
       '<div class="sub">' + sub + '</div></div>';
   }
+
+  el.content.addEventListener('input', function (e) {
+    var id = e.target.id;
+    if (id !== 'conv-usd' && id !== 'conv-ils') return;
+    var other = document.getElementById(id === 'conv-usd' ? 'conv-ils' : 'conv-usd');
+    other.value = Logic.convert(e.target.value, state.rate, id === 'conv-usd' ? 'usd' : 'ils');
+  });
 
   function showError(msg) {
     el.content.innerHTML = '<div class="alert" role="alert"><b>' + msg + '</b></div>';
