@@ -92,6 +92,15 @@ test('no local price -> "none"', () => {
   assert.deepEqual(Logic.decision(rows), { type: 'none', reason: 'no_local' });
 });
 
+test('no abroad price -> "none" with reason no_abroad', () => {
+  const rows = [
+    { source: 'amazon', available: false },
+    { source: 'aliexpress', available: false },
+    { source: 'google_il', available: true, price_ils: 500 }
+  ];
+  assert.deepEqual(Logic.decision(rows), { type: 'none', reason: 'no_abroad' });
+});
+
 // 6. KPI cards
 test('gap = local minus cheapest abroad, in shekels and whole percent', () => {
   assert.deepEqual(Logic.gap(rowsFor(AIRPODS_PRO)), { ils: 263, pct: 26 });
