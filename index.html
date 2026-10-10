@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>השוואת מוצרים בחנות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+  :root {
+    --page: #ffffff; --surface: #ffffff; --surface-muted: #f5f5f3;
+    --border: #e4e4e0; --border-strong: #cfcfca;
+    --text: #1f1f1d; --text-2: #5f5e5a; --text-3: #8a8984;
+    --blue: #378ADD; --blue-bg: #E6F1FB; --blue-text: #0C447C;
+    --green: #3B6D11; --green-bg: #EAF3DE; --green-text: #27500A;
+    --red: #E24B4A; --red-bg: #FCEBEB; --red-text: #791F1F;
+    --amber-bg: #FAEEDA; --amber-text: #633806;
+    --gray-bar: #888780; --gray-bg: #F1EFE8; --gray-text: #444441;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --page: #161615; --surface: #1f1f1d; --surface-muted: #262624;
+      --border: #34342f; --border-strong: #4a4a44;
+      --text: #ecebe6; --text-2: #b4b2a9; --text-3: #888780;
+      --blue: #85B7EB; --blue-bg: #0C447C; --blue-text: #B5D4F4;
+      --green: #97C459; --green-bg: #27500A; --green-text: #C0DD97;
+      --red: #F09595; --red-bg: #791F1F; --red-text: #F7C1C1;
+      --amber-bg: #633806; --amber-text: #FAC775;
+      --gray-bar: #888780; --gray-bg: #444441; --gray-text: #D3D1C7;
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--text); font-family: 'Heebo', system-ui, sans-serif; font-size: 15px; line-height: 1.5; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 20px 16px 40px; }
+  b, strong, h1, h2 { font-weight: 500; }
+  .ltr { direction: ltr; unicode-bidi: isolate; display: inline-block; }
+
+  header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 16px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+  header h1 { margin: 0; font-size: 22px; display: flex; align-items: center; gap: 10px; }
+  header h1 i { color: var(--blue); font-size: 24px; }
+  .meta { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; color: var(--text-2); }
+  .pill { font-size: 12px; padding: 2px 10px; border-radius: 8px; }
+  .pill.warn { background: var(--amber-bg); color: var(--amber-text); }
+  .pill.best { background: var(--green-bg); color: var(--green-text); }
+
+  .search { position: relative; margin-top: 18px; }
+  .search-box { display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 14px; border: 1px solid var(--border-strong); border-radius: 8px; background: var(--surface); }
+  .search-box:focus-within { border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-bg); }
+  .search-box i { color: var(--text-3); font-size: 18px; }
+  .search-box input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--text); font: inherit; font-size: 16px; }
+  .search-box input::placeholder { color: var(--text-3); }
+  .count { font-size: 12px; color: var(--text-3); white-space: nowrap; }
+  .list { position: absolute; z-index: 5; inset-inline: 0; top: 48px; max-height: 360px; overflow-y: auto; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 8px; padding: 4px 0; }
+  .list[hidden], .notfound[hidden] { display: none; }
+  .group { padding: 8px 14px 4px; font-size: 12px; color: var(--text-3); }
+  .option { display: flex; justify-content: space-between; gap: 12px; padding: 8px 14px; cursor: pointer; }
+  .option:hover, .option.first { background: var(--blue-bg); }
+  .option .cat { font-size: 12px; color: var(--text-2); }
+  .notfound { margin-top: 8px; padding: 10px 14px; border-radius: 8px; background: var(--red-bg); color: var(--red-text); font-size: 14px; display: flex; align-items: center; gap: 8px; }
+
+  .alert { margin-top: 18px; padding: 14px 16px; border-radius: 12px; background: var(--red-bg); color: var(--red-text); }
+  .empty { margin-top: 40px; text-align: center; color: var(--text-2); }
+  .empty i { font-size: 40px; color: var(--text-3); display: block; margin-bottom: 8px; }
+
+  .product-head { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 10px; margin-top: 24px; }
+  .product-head i { font-size: 22px; color: var(--text-2); }
+  .product-head h2 { margin: 0; font-size: 19px; }
+  .product-head span { font-size: 13px; color: var(--text-2); }
+
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-top: 12px; }
+  .kpi { background: var(--surface-muted); border-radius: 8px; padding: 12px 14px; }
+  .kpi .label { font-size: 12px; color: var(--text-2); }
+  .kpi .value { font-size: 22px; font-weight: 500; line-height: 1.3; }
+  .kpi .sub { font-size: 12px; color: var(--text-2); }
+  .good { color: var(--green-text); }
+  .bad { color: var(--red-text); }
+  @media (prefers-color-scheme: dark) { .kpi .value.good { color: var(--green); } .kpi .value.bad { color: var(--red); } }
+
+  .section-title { font-size: 13px; color: var(--text-2); margin: 22px 0 8px; }
+  .sources { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; }
+  .card.best { border: 2px solid var(--green); padding: 13px; }
+  .card.na { border-style: dashed; }
+  .card-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .card-top b { display: flex; align-items: center; gap: 6px; }
+  .card-top i { font-size: 18px; color: var(--text-2); }
+  .price { font-size: 22px; font-weight: 500; margin-top: 6px; }
+  .card .sub { font-size: 12px; color: var(--text-2); }
+  .card.na .price { color: var(--text-3); font-size: 18px; }
+  .bar { height: 6px; background: var(--surface-muted); border-radius: 3px; margin-top: 10px; overflow: hidden; }
+  .bar div { height: 100%; border-radius: 3px; background: var(--blue); }
+  .bar.local div { background: var(--gray-bar); }
+
+  .banner { display: flex; align-items: center; gap: 12px; margin-top: 14px; padding: 14px 16px; border-radius: 12px; }
+  .banner i { font-size: 24px; }
+  .banner b { display: block; }
+  .banner .sub { font-size: 13px; }
+  .banner.abroad { background: var(--green-bg); color: var(--green-text); }
+  .banner.local { background: var(--red-bg); color: var(--red-text); }
+  .banner.none { background: var(--gray-bg); color: var(--gray-text); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1><i class="ti ti-device-mobile" aria-hidden="true"></i>השוואת מוצרים בחנות</h1>
+    <div class="meta" id="meta"></div>
+  </header>
+
+  <div class="search">
+    <label class="search-box">
+      <i class="ti ti-search" aria-hidden="true"></i>
+      <input id="q" type="text" autocomplete="off" placeholder="חפשי מוצר…" aria-label="חיפוש מוצר" aria-controls="list" aria-expanded="false">
+      <span class="count" id="count"></span>
+    </label>
+    <div class="list" id="list" role="listbox" hidden></div>
+    <div class="notfound" id="notfound" role="status" hidden></div>
+  </div>
+
+  <main id="content"></main>
+</div>
+
+<script src="logic.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var RATE_URL = 'https://api.frankfurter.dev/v1/latest?base=USD&symbols=ILS';
+  var SOURCE_LABELS = { amazon: 'Amazon', aliexpress: 'AliExpress', google_il: 'Google Shopping IL' };
+  var SOURCE_ICONS = { amazon: 'ti-brand-amazon', aliexpress: 'ti-shopping-bag', google_il: 'ti-brand-google' };
+  var CATEGORY_ICONS = {
+    'טלפונים': 'ti-device-mobile', 'אוזניות': 'ti-headphones', 'שעונים': 'ti-device-watch',
+    'מטענים': 'ti-battery-charging', 'כיסויים': 'ti-shield', 'מגיני מסך': 'ti-square'
+  };
+
+  var state = { data: null, rate: null, rateLive: false, rateDate: null, results: [] };
+  var el = {
+    meta: document.getElementById('meta'),
+    q: document.getElementById('q'),
+    count: document.getElementById('count'),
+    list: document.getElementById('list'),
+    notfound: document.getElementById('notfound'),
+    content: document.getElementById('content')
+  };
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function num(text) { return '<span class="ltr">' + esc(text) + '</span>'; }
+
+  function fetchRate() {
+    var ctrl = new AbortController();
+    var timer = setTimeout(function () { ctrl.abort(); }, 6000);
+    return fetch(RATE_URL, { signal: ctrl.signal })
+      .then(function (r) { if (!r.ok) throw new Error('rate ' + r.status); return r.json(); })
+      .then(function (j) {
+        clearTimeout(timer);
+        if (typeof j.rates.ILS !== 'number') throw new Error('no ILS');
+        return { rate: j.rates.ILS, date: j.date };
+      });
+  }
+
+  // ---------- header ----------
+  function renderMeta() {
+    var html = '<span>נתונים עודכנו: ' + num(Logic.formatDate(state.data.updated_at)) + '</span>';
+    if (state.rate != null) html += '<span>' + num('$1 = ₪' + Logic.formatRate(state.rate)) + '</span>';
+    if (!state.rateLive) html += '<span class="pill warn">שער לא עדכני</span>';
+    el.meta.innerHTML = html;
+  }
+
+  // ---------- search ----------
+  function openList(open) {
+    el.list.hidden = !open;
+    el.q.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  function renderSearch() {
+    var query = el.q.value;
+    var products = state.data.products;
+    state.results = Logic.filterProducts(products, query);
+
+    if (query.trim() && !state.results.length) {
+      openList(false);
+      el.notfound.innerHTML = '<i class="ti ti-search-off" aria-hidden="true"></i>המוצר "' + esc(query.trim()) + '" לא נמצא ברשימה';
+      el.notfound.hidden = false;
+      return;
+    }
+    el.notfound.hidden = true;
+
+    var html = '';
+    function option(p, i) {
+      return '<div class="option' + (i === 0 ? ' first' : '') + '" role="option" data-id="' + esc(p.id) + '">' +
+        '<span>' + esc(p.name_he) + '</span><span class="cat">' + esc(p.category) + '</span></div>';
+    }
+    if (!query.trim()) {
+      var i = 0;
+      Logic.groupByCategory(products).forEach(function (g) {
+        html += '<div class="group">' + esc(g.category) + '</div>';
+        g.items.forEach(function (p) { html += option(p, i++); });
+      });
+      state.results = products.slice();
+    } else {
+      state.results.forEach(function (p, i) { html += option(p, i); });
+    }
+    el.list.innerHTML = html;
+    openList(true);
+  }
+
+  function select(id) {
+    var p = state.data.products.filter(function (x) { return String(x.id) === String(id); })[0];
+    if (!p) return;
+    el.q.value = p.name_he;
+    el.notfound.hidden = true;
+    openList(false);
+    renderProduct(p);
+  }
+
+  el.q.addEventListener('focus', renderSearch);
+  el.q.addEventListener('input', renderSearch);
+  el.q.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && !el.list.hidden && state.results.length) {
+      e.preventDefault();
+      select(state.results[0].id);
+    }
+  });
+  el.list.addEventListener('mousedown', function (e) {
+    var opt = e.target.closest('.option');
+    if (!opt) return;
+    e.preventDefault();
+    select(opt.getAttribute('data-id'));
+  });
+  document.addEventListener('mousedown', function (e) {
+    if (!e.target.closest('.search')) openList(false);
+  });
+
+  // ---------- product ----------
+  function renderEmpty() {
+    el.content.innerHTML = '<div class="empty"><i class="ti ti-search" aria-hidden="true"></i>' +
+      'בחרי מוצר מהרשימה כדי לראות השוואת מחירים</div>';
+  }
+
+  function renderProduct(p) {
+    var rows = Logic.priceRows(state.data.prices, p.id, state.rate);
+    var best = Logic.cheapest(rows);
+    var gap = Logic.gap(rows);
+    var decision = Logic.decision(rows);
+    var rating = Logic.weightedRating(rows);
+    var reviews = rows.reduce(function (n, r) { return n + (r.available ? r.reviews_count || 0 : 0); }, 0);
+    var max = rows.reduce(function (m, r) { return r.available ? Math.max(m, r.price_ils) : m; }, 0);
+    var local = rows.filter(function (r) { return r.source === 'google_il'; })[0];
+
+    var html = '<div class="product-head"><i class="ti ' + (CATEGORY_ICONS[p.category] || 'ti-box') + '" aria-hidden="true"></i>' +
+      '<h2>' + esc(p.name_he) + '</h2><span>' + esc(p.name_en) + ' · ' + esc(p.category) + '</span></div>';
+
+    // KPIs
+    html += '<div class="kpis">';
+    html += kpi('המחיר הזול ביותר', best ? num(Logic.formatIls(best.price_ils)) : '—', best ? esc(SOURCE_LABELS[best.source]) : 'אין נתון');
+    if (gap) {
+      var saving = gap.ils > 0;
+      html += kpi('פער מהמחיר בארץ',
+        num(Logic.formatIls(gap.ils)),
+        saving ? num(gap.pct + '%') + ' חיסכון בהזמנה מחו"ל' : 'המחיר בארץ זול ב-' + num(Math.abs(gap.pct) + '%'),
+        saving ? 'good' : 'bad');
+    } else {
+      html += kpi('פער מהמחיר בארץ', '—', 'אין נתון להשוואה');
+    }
+    html += kpi('דירוג ממוצע', rating != null ? num(Logic.formatRating(rating)) + ' <i class="ti ti-star" style="font-size:16px" aria-hidden="true"></i>' : '—',
+      rating != null ? num(reviews.toLocaleString('en-US')) + ' ביקורות' : 'אין ביקורות');
+    html += kpi('שער דולר', num(Logic.formatRate(state.rate)),
+      state.rateLive ? 'Frankfurter · ' + num(Logic.formatDate(state.rateDate)) : '<span class="bad">שער לא עדכני</span>');
+    html += '</div>';
+
+    // source cards
+    html += '<div class="section-title">השוואת מחירים לפי מקור</div><div class="sources">';
+    rows.forEach(function (r) {
+      var isBest = best && r.source === best.source;
+      var top = '<div class="card-top"><b><i class="ti ' + SOURCE_ICONS[r.source] + '" aria-hidden="true"></i>' + esc(SOURCE_LABELS[r.source]) + '</b>' +
+        (isBest ? '<span class="pill best">הכי זול</span>' : '') + '</div>';
+      if (!r.available) {
+        html += '<div class="card na">' + top + '<div class="price">אין נתון</div><div class="sub">המחיר לא נמצא במקור הזה</div></div>';
+        return;
+      }
+      var sub = r.source === 'google_il'
+        ? 'מחיר בארץ'
+        : num(Logic.formatUsd(r.price_usd)) + (r.rating != null ? ' · ' + num(Logic.formatRating(r.rating)) + ' כוכבים' : '');
+      var width = max ? Math.round((r.price_ils / max) * 100) : 0;
+      html += '<div class="card' + (isBest ? ' best' : '') + '">' + top +
+        '<div class="price">' + num(Logic.formatIls(r.price_ils)) + '</div><div class="sub">' + sub + '</div>' +
+        '<div class="bar' + (r.source === 'google_il' ? ' local' : '') + '"><div style="width:' + width + '%"></div></div></div>';
+    });
+    html += '</div>';
+
+    // decision banner
+    var b;
+    if (decision.type === 'abroad') {
+      b = { cls: 'abroad', icon: 'ti-circle-check',
+        title: 'כדאי להזמין מ-' + esc(SOURCE_LABELS[decision.source]) + ', חיסכון של ' + num(Logic.formatIls(decision.savings)),
+        sub: 'לעומת ' + num(Logic.formatIls(local.price_ils)) + ' ב-Google Shopping IL' };
+    } else if (decision.type === 'local') {
+      b = { cls: 'local', icon: 'ti-alert-circle', title: 'המחיר בארץ משתלם יותר',
+        sub: num(Logic.formatIls(local.price_ils)) + ' ב-Google Shopping IL' };
+    } else {
+      b = { cls: 'none', icon: 'ti-info-circle',
+        title: decision.reason === 'no_local' ? 'אין מחיר בארץ להשוואה' : 'אין מחיר מחו"ל להשוואה', sub: '' };
+    }
+    html += '<div class="banner ' + b.cls + '" role="status"><i class="ti ' + b.icon + '" aria-hidden="true"></i><div><b>' + b.title + '</b>' +
+      (b.sub ? '<div class="sub">' + b.sub + '</div>' : '') + '</div></div>';
+
+    el.content.innerHTML = html;
+  }
+
+  function kpi(label, value, sub, tone) {
+    return '<div class="kpi"><div class="label">' + label + '</div><div class="value' + (tone ? ' ' + tone : '') + '">' + value + '</div>' +
+      '<div class="sub">' + sub + '</div></div>';
+  }
+
+  function showError(msg) {
+    el.content.innerHTML = '<div class="alert" role="alert"><b>' + msg + '</b></div>';
+  }
+
+  // ---------- start ----------
+  fetch('data.json')
+    .then(function (r) { if (!r.ok) throw new Error('data ' + r.status); return r.json(); })
+    .then(function (data) {
+      if (!data || !Array.isArray(data.products) || !Array.isArray(data.prices)) throw new Error('bad data');
+      state.data = data;
+      el.count.textContent = data.products.length + ' מוצרים בקטלוג';
+      return fetchRate().then(function (r) {
+        state.rate = r.rate; state.rateDate = r.date; state.rateLive = true;
+      }, function () {
+        state.rate = Logic.fallbackRate(data.history); state.rateLive = false;
+      });
+    })
+    .then(function () {
+      renderMeta();
+      if (state.rate == null) { showError('לא ניתן לקבל שער דולר, ואין שער שמור בנתונים.'); el.q.disabled = true; return; }
+      renderEmpty();
+    })
+    .catch(function () {
+      el.q.disabled = true;
+      showError('לא ניתן לטעון את נתוני המוצרים (data.json). בדקי שהקובץ קיים ותקין.');
+    });
+})();
+</script>
+</body>
+</html>

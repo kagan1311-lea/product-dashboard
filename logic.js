@@ -114,8 +114,56 @@
     return latest ? latest.usd_rate : null;
   }
 
+  // Spec: Done means / 1. Empty search lists every product under its category,
+  // categories in the order they first appear.
+  function groupByCategory(products) {
+    var groups = [];
+    products.forEach(function (p) {
+      var g = groups.filter(function (x) { return x.category === p.category; })[0];
+      if (!g) {
+        g = { category: p.category, items: [] };
+        groups.push(g);
+      }
+      g.items.push(p);
+    });
+    return groups;
+  }
+
+  // Spec: Design / Numbers.
+  function withThousands(n) {
+    return String(Math.abs(Math.round(n))).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
+  function formatIls(n) {
+    return (n < 0 ? '-' : '') + '₪' + withThousands(n);
+  }
+
+  function formatUsd(n) {
+    return (n < 0 ? '-' : '') + '$' + withThousands(n);
+  }
+
+  function formatRate(rate) {
+    return rate.toFixed(2);
+  }
+
+  function formatRating(rating) {
+    return rating.toFixed(1);
+  }
+
+  // Spec: Done means / 7. "2026-10-10" -> "10.10.2026".
+  function formatDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || '');
+    return m ? m[3] + '.' + m[2] + '.' + m[1] : '';
+  }
+
   return {
     SOURCES: SOURCES,
+    groupByCategory: groupByCategory,
+    formatIls: formatIls,
+    formatUsd: formatUsd,
+    formatRate: formatRate,
+    formatRating: formatRating,
+    formatDate: formatDate,
     filterProducts: filterProducts,
     toIls: toIls,
     priceRows: priceRows,
