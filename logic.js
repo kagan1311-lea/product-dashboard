@@ -177,6 +177,18 @@
     return Math.round((sum / count) * 10) / 10;
   }
 
+  // Spec: Done means / Should - reviews card. Only sources with reviews; bar length is
+  // relative to the source with the most reviews (100%).
+  function reviewRows(rows) {
+    var withReviews = rows.filter(function (r) {
+      return r.available && r.rating != null && r.reviews_count > 0;
+    });
+    var max = withReviews.reduce(function (m, r) { return Math.max(m, r.reviews_count); }, 0);
+    return withReviews.map(function (r) {
+      return { source: r.source, rating: r.rating, reviews_count: r.reviews_count, pct: Math.round((r.reviews_count / max) * 100) };
+    });
+  }
+
   // Spec: Done means / 4. Rate to use when the live API fails: the latest usd_rate in history.
   function fallbackRate(history) {
     var latest = (history || []).reduce(function (best, h) {
@@ -252,6 +264,7 @@
     gap: gap,
     decision: decision,
     weightedRating: weightedRating,
+    reviewRows: reviewRows,
     fallbackRate: fallbackRate
   };
 });

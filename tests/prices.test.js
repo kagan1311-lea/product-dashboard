@@ -121,6 +121,18 @@ test('average rating is weighted by reviews_count, one decimal', () => {
   assert.equal(Logic.weightedRating(rowsFor(AIRPODS_PRO)), 4.7);
 });
 
+// Should - reviews card
+test('reviews card lists only sources with reviews, bars relative to the most reviewed', () => {
+  assert.deepEqual(Logic.reviewRows(rowsFor(AIRPODS_PRO)), [
+    { source: 'amazon', rating: 4.7, reviews_count: 8640, pct: 100 },
+    { source: 'aliexpress', rating: 4.3, reviews_count: 1210, pct: 14 }
+  ]);
+});
+
+test('reviews card skips a source with no data', () => {
+  assert.deepEqual(Logic.reviewRows(rowsFor(MAGSAFE)).map((r) => r.source), ['amazon']);
+});
+
 test('average rating is null when there are no reviews', () => {
   assert.equal(Logic.weightedRating([{ source: 'google_il', available: true, rating: null, reviews_count: 0 }]), null);
 });

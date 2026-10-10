@@ -107,6 +107,11 @@
   .conv label span { color: var(--text-2); }
   .conv input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--text); font: inherit; font-size: 17px; font-weight: 500; text-align: left; }
   .card > .sub { margin-top: 8px; }
+  .review + .review { margin-top: 14px; }
+  .review-top { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; }
+  .review-top span:last-child { font-size: 13px; color: var(--text-2); }
+  .review-top i { font-size: 13px; }
+  .review .bar { margin-top: 6px; }
   #rate-chart { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
   .chart-head { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; color: var(--text-2); }
   .chart { display: block; width: 100%; height: 60px; margin-top: 6px; color: var(--blue); overflow: visible; }
@@ -348,7 +353,21 @@
     // converter
     var abroad = Logic.cheapestAbroad(rows);
     var usd = abroad ? String(abroad.price_usd) : '';
+    var reviewRows = Logic.reviewRows(rows);
     html += '<div class="extras"><div class="card">' +
+      '<div class="card-title"><i class="ti ti-message-circle" aria-hidden="true"></i>ביקורות</div>';
+    if (!reviewRows.length) {
+      html += '<div class="chart-note">אין ביקורות למוצר הזה</div>';
+    }
+    reviewRows.forEach(function (r) {
+      html += '<div class="review">' +
+        '<div class="review-top"><span>' + esc(SOURCE_LABELS[r.source]) + '</span>' +
+        '<span>' + num(Logic.formatRating(r.rating)) + ' <i class="ti ti-star" aria-hidden="true"></i> · ' +
+        num(r.reviews_count.toLocaleString('en-US')) + ' ביקורות</span></div>' +
+        '<div class="bar"><div style="width:' + r.pct + '%"></div></div></div>';
+    });
+    html += '</div>';
+    html += '<div class="card">' +
       '<div class="card-title"><i class="ti ti-arrows-exchange" aria-hidden="true"></i>ממיר מטבע</div>' +
       '<div class="conv">' +
       '<label><span>$</span><input id="conv-usd" type="text" inputmode="decimal" dir="ltr" aria-label="סכום בדולרים" value="' + esc(usd) + '"></label>' +
