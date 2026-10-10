@@ -1,0 +1,50 @@
+{
+  "categoryOrProductUrls": [
+    {
+      "url": "https://www.amazon.com/s?k=iPhone+17+Pro"
+    },
+    {
+      "url": "https://www.amazon.com/s?k=iPhone+17"
+    },
+    {
+      "url": "https://www.amazon.com/s?k=Samsung+Galaxy+S25+Ultra"
+    },
+    {
+      "url": "https://www.amazon.com/s?k=Samsung+Galaxy+S25"
+    },
+    {
+      "url": "https://www.amazon.com/s?k=Google+Pixel+10"
+    },
+    {
+      "url": "https://www.amazon.com/s?k=Xiaomi+Redmi+Note+14"
+    },
+    {
+      "url": "https://www.amazon.com/s?k=AirPods+Pro+3"
+    },
+    {
+      "url": "https://www.amazon.com/s?k=AirPods+4"
+    },
+    {
+      "url": "https://www.amazon.com/s?k=Galaxy+Buds3+Pro"
+    },
+    {
+      "url": "https://www.amazon.com/s?k=Apple+Watch+Series+11"
+    },
+    {
+      "url": "https://www.amazon.com/s?k=Apple+20W+USB-C+charger"
+    },
+    {
+      "url": "https://www.amazon.com/s?k=Apple+MagSafe+charger"
+    },
+    {
+      "url": "https://www.amazon.com/s?k=Anker+power+bank+10000mAh"
+    },
+    {
+      "url": "https://www.amazon.com/s?k=Spigen+iPhone+case"
+    },
+    {
+      "url": "https://www.amazon.com/s?k=tempered+glass+screen+protector"
+    }
+  ],
+  "maxItemsPerStartUrl": 3
+}
