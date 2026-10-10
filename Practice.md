@@ -13,6 +13,7 @@ Read [SPEC.md](SPEC.md) before making any change.
 
 ## Project rules
 
+- Run all tests with `npm test` (Node's built-in test runner, no dependencies). Tests live in `tests/`; testable logic lives in `logic.js`, kept free of DOM and network code.
 - No API tokens or keys in the code or the repository — the site is public on GitHub Pages.
 - `data.json` must keep the exact structure described in the spec, so the switch to Google Sheets (stage 2) stays a one-line change.
 

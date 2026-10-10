@@ -1,0 +1,8 @@
+{
+  "name": "product-dashboard",
+  "private": true,
+  "description": "השוואת מוצרים בחנות",
+  "scripts": {
+    "test": "node --test"
+  }
+}
