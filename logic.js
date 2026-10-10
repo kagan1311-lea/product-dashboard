@@ -222,8 +222,11 @@
     return (n < 0 ? '-' : '') + '₪' + withThousands(n);
   }
 
+  // Whole dollars stay whole ($199); real store prices keep their cents ($14.99).
   function formatUsd(n) {
-    return (n < 0 ? '-' : '') + '$' + withThousands(n);
+    var cents = Math.round(Math.abs(n) * 100) % 100;
+    var whole = withThousands(Math.floor(Math.round(Math.abs(n) * 100) / 100));
+    return (n < 0 ? '-' : '') + '$' + whole + (cents ? '.' + (cents < 10 ? '0' : '') + cents : '');
   }
 
   function formatRate(rate) {

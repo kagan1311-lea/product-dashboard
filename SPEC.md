@@ -46,19 +46,30 @@
 
 | שלב | מוצרים ומחירים | שער דולר |
 |---|---|---|
-| **שלב 1 (עכשיו)** | `data.json` – 15 מוצרי דמו | Frankfurter API, חי מהדפדפן |
+| **שלב 1 (עכשיו)** | `data.json` – 15 מוצרים, מחירים מ-Apify (ייבוא דרך סקריפט) | Frankfurter API, חי מהדפדפן |
 | **שלב 2 (תרגיל Make)** | Google Sheets מפורסם כ-CSV, מתעדכן ע"י Make ← Apify | Frankfurter API |
 
 **Apify:** כל ריצה של Actor מוגבלת ל-**50 תוצאות** לכל היותר, כדי לשמור על הקרדיט החינמי. כשהקרדיט נגמר הדשבורד ממשיך לעבוד עם הנתונים האחרונים.
 
-### מבנה הנתונים (זהה בשני השלבים)
+### ייבוא מ-Apify (שלב 1)
 
-- `updated_at` – תאריך עדכון הנתונים.
-- `products`: `id, name_he, name_en, category, search_term`
-- `prices`: `product_id, source, price_usd, price_ils, rating, reviews_count, updated_at`
-  - `source` ∈ `amazon` | `aliexpress` | `google_il`
-  - ל-`amazon`/`aliexpress` ממלאים `price_usd`; ל-`google_il` ממלאים `price_ils`.
-- `history`: `date, product_id, source, price_ils, usd_rate`
+| מקור | Actor | קלט |
+|---|---|---|
+| Amazon | `junglee/amazon-crawler` | חיפוש לפי `search_term`, 3 תוצאות למוצר |
+| AliExpress | `kawsar/aliexpress-search-scraper` | 3 תוצאות למוצר; מחיר מינימום: טלפונים $150, אוזניות/שעונים $40, אביזרים – בלי. **מוצרי Apple לא נשלחים לחיפוש** (ב-AliExpress הם חיקויים) |
+| Google Shopping IL | `scrapewise/google-shopping` | `country: il`, 3 תוצאות למוצר, מחיר בשקלים |
+
+תוצאות הגולמיות נשמרות ב-`apify/raw/`, וסקריפט `scripts/import-apify.js` בונה מהן את `data.json`.
+
+**כללי התאמה – איזו תוצאה נחשבת "המוצר":**
+- כל מילה ב-`search_term` מופיעה בכותרת (מספרים כמילה שלמה – `10` לא מתאים ל-`10a`; `Buds3` מתאים גם ל-`Buds 3`). מילים תיאוריות (`tempered`, `glass`, `screen`, `protector`, `power`, `bank`, `charger`, `case`, `usb-c`, `cable`, `wireless`) לא חובה, אבל לפחות מילה אחת מהחיפוש חייבת להופיע.
+- לא משומש: הכותרת לא כוללת `renewed` / `refurbished` / `used` / `מחודש` / `יד שנייה`, ומצב המוצר (אם ידוע) הוא `new`.
+- כשהחיפוש הוא מכשיר ולא אביזר:
+  - אין דגם אחר שלא בחיפוש: `pro`, `max`, `ultra`, `plus` (גם `S25+`), `mini`, `fe`, `edge`, `lite`, `air`, `se`.
+  - אין סימני אביזר: `case for`, `for iphone` / `for airpods` / `for samsung` ..., `replacement`, `eartips`, `protector`, `כיסוי`, `מגן`.
+- מחיר: Amazon/AliExpress מומרים לדולר לפי Frankfurter (AliExpress מחזיר לפעמים AUD/EUR/CAD); מטבע ש-Frankfurter לא מכיר – נפסל. Google Shopping IL חייב להיות ב-ILS.
+- מבין התוצאות שעברו – נבחרת הראשונה (הרלוונטית ביותר לפי האתר). אין התאמה → אין שורה → "אין נתון".
+- `history` נבנית מחדש בכל ייבוא: שורה לכל מחיר, לפי שער היום.
 
 ---
 

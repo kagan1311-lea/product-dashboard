@@ -3,6 +3,7 @@
   "private": true,
   "description": "השוואת מוצרים בחנות",
   "scripts": {
-    "test": "node --test"
+    "test": "node --test",
+    "import": "node scripts/import-apify.js"
   }
 }

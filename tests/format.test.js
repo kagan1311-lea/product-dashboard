@@ -2,7 +2,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const Logic = require('../logic.js');
-const { products } = require('../data.json');
+const { products } = require('./fixtures/demo-data.json');
 
 test('shekels: whole number with a thousands separator', () => {
   assert.equal(Logic.formatIls(1240), '₪1,240');
@@ -14,6 +14,9 @@ test('shekels: whole number with a thousands separator', () => {
 test('dollars: as in the data, with a thousands separator', () => {
   assert.equal(Logic.formatUsd(249), '$249');
   assert.equal(Logic.formatUsd(1099), '$1,099');
+  assert.equal(Logic.formatUsd(14.99), '$14.99');
+  assert.equal(Logic.formatUsd(6.9), '$6.90');
+  assert.equal(Logic.formatUsd(1048.05), '$1,048.05');
 });
 
 test('rate has 2 decimals, rating has 1', () => {

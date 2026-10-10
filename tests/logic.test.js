@@ -2,7 +2,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const Logic = require('../logic.js');
 
-const { products } = require('../data.json');
+const { products } = require('./fixtures/demo-data.json');
 
 test('logic.js loads in Node and exposes an object', () => {
   assert.equal(typeof Logic, 'object');

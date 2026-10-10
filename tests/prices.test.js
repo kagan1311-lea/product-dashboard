@@ -2,7 +2,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const Logic = require('../logic.js');
-const { prices, history } = require('../data.json');
+const { prices, history } = require('./fixtures/demo-data.json');
 
 const RATE = 3.06;
 const AIRPODS_PRO = 7;
@@ -77,7 +77,7 @@ test('local cheaper -> "local"', () => {
 // Regression for #1: the demo must keep one product that is cheaper locally,
 // so the red banner can be shown with a realistic rate.
 test('at the history rate the demo still has a local-cheaper product', () => {
-  const local = require('../data.json').products.filter(
+  const local = require('./fixtures/demo-data.json').products.filter(
     (p) => Logic.decision(Logic.priceRows(prices, p.id, Logic.fallbackRate(history))).type === 'local'
   );
   assert.ok(local.length >= 1);
