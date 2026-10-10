@@ -13,14 +13,81 @@
     return String(text == null ? '' : text).trim().toLowerCase();
   }
 
-  // Spec: Features / Must 1-2. Substring match on the Hebrew or English name,
-  // case-insensitive. Empty query returns every product; no match returns [].
+  // Hebrew -> English accessory terms. Used to translate Hebrew search words and,
+  // in scripts/import-apify.js, to accept Hebrew store titles. Spec: Features / Must 1.
+  var TERMS = [
+    ['מטען', 'charger'], ['כבל', 'cable'], ['סוללת גיבוי', 'power bank'], ['סוללה', 'power bank'],
+    ['מגן מסך', 'screen protector'], ['מגן עדשה', 'lens protector'], ['מגן', 'protector'],
+    ['עדשה', 'lens'], ['עדשת', 'lens'], ['מצלמה', 'camera'], ['זכוכית', 'glass'], ['מסך', 'screen'],
+    ['כיסוי', 'case'], ['נרתיק', 'case'], ['אוזניות', 'earbuds'], ['אוזניה', 'earbuds'],
+    ['איירפודס', 'airpods'], ['כריות', 'ear tips'], ['מעמד', 'holder'], ['מחזיק', 'holder'],
+    ['רכב', 'car'], ['מגנטי', 'magnetic'], ['מגנטית', 'magnetic'], ['אלחוטי', 'wireless'],
+    ['מקל סלפי', 'selfie stick'], ['מוט סלפי', 'selfie stick'], ['מוט', 'stick'], ['סלפי', 'selfie'],
+    ['משטח טעינה', 'charger'], ['חצובה', 'tripod'], ['מתאם', 'adapter'],
+    ['ניקוי', 'cleaning'], ['עט', 'pen'], ['טלפון', 'phone'], ['פופסוקט', 'popsockets'],
+    ['אחיזה', 'grip'], ['לייטנינג', 'lightning'], ['אנקר', 'anker'], ['בייסוס', 'baseus'],
+    ['יוגרין', 'ugreen'], ['ספיגן', 'spigen']
+  ];
+  var HEBREW_PREFIXES = 'הולבכשמ';
+
+  // English terms for one typed Hebrew word. Matches the start of any word in a
+  // dictionary entry, so partial typing works ("מטע" -> charger), and retries
+  // without a leading prefix letter ("לאוזניות" -> earbuds).
+  function translateWord(word) {
+    var w = normalize(word);
+    var forms = [w];
+    if (w.length > 2 && HEBREW_PREFIXES.indexOf(w.charAt(0)) !== -1) forms.push(w.slice(1));
+    var out = [];
+    TERMS.forEach(function (t) {
+      var hit = forms.some(function (f) {
+        return f.length >= 2 && t[0].split(' ').some(function (part) {
+          return part.indexOf(f) === 0 || f.indexOf(part) === 0;
+        });
+      });
+      if (hit && out.indexOf(t[1]) === -1) out.push(t[1]);
+    });
+    return out;
+  }
+
+  // English strings a typed query can match in a product's English name:
+  // the query itself plus the translation of each Hebrew word.
+  function englishTerms(query) {
+    var q = normalize(query);
+    if (!q) return [];
+    var out = [q];
+    q.split(/\s+/).forEach(function (w) {
+      translateWord(w).forEach(function (t) { if (out.indexOf(t) === -1) out.push(t); });
+    });
+    return out;
+  }
+
+  // Spec: Features / Must 1-2. Every typed word must match the product: as part of
+  // the English or Hebrew name, or through its English translation. Case-insensitive.
+  // Empty query returns every product; no match returns [].
   function filterProducts(products, query) {
     var q = normalize(query);
     if (!q) return products.slice();
+    var words = q.split(/\s+/);
     return products.filter(function (p) {
-      return normalize(p.name_he).indexOf(q) !== -1 || normalize(p.name_en).indexOf(q) !== -1;
+      var en = normalize(p.name_en);
+      var he = normalize(p.name_he);
+      if (en.indexOf(q) !== -1 || he.indexOf(q) !== -1) return true;
+      return words.every(function (w) {
+        if (en.indexOf(w) !== -1 || he.indexOf(w) !== -1) return true;
+        return translateWord(w).some(function (t) { return en.indexOf(t) !== -1; });
+      });
     });
+  }
+
+  // The part of an English name to highlight for a query: the first of
+  // englishTerms(query) found in the name.
+  function highlightName(name, query) {
+    var terms = englishTerms(query);
+    var t = normalize(name);
+    for (var i = 0; i < terms.length; i++) {
+      if (t.indexOf(terms[i]) !== -1) return highlightParts(name, terms[i]);
+    }
+    return [{ text: String(name), match: false }];
   }
 
   // Spec: Done means / Should - currency converter. Accepts "1,099" or " 249.5 ";
@@ -253,6 +320,10 @@
     parseAmount: parseAmount,
     convert: convert,
     highlightParts: highlightParts,
+    highlightName: highlightName,
+    TERMS: TERMS,
+    translateWord: translateWord,
+    englishTerms: englishTerms,
     moveIndex: moveIndex,
     formatIls: formatIls,
     formatUsd: formatUsd,

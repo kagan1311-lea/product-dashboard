@@ -1,50 +1,52 @@
 {
   "categoryOrProductUrls": [
     {
-      "url": "https://www.amazon.com/s?k=iPhone+17+Pro"
+      "url": "https://www.amazon.com/s?k=Anker+Nano+20W+charger"
     },
     {
-      "url": "https://www.amazon.com/s?k=iPhone+17"
+      "url": "https://www.amazon.com/s?k=Baseus+wireless+charger"
     },
     {
-      "url": "https://www.amazon.com/s?k=Samsung+Galaxy+S25+Ultra"
+      "url": "https://www.amazon.com/s?k=Ugreen+USB-C+cable"
     },
     {
-      "url": "https://www.amazon.com/s?k=Samsung+Galaxy+S25"
-    },
-    {
-      "url": "https://www.amazon.com/s?k=Google+Pixel+10"
-    },
-    {
-      "url": "https://www.amazon.com/s?k=Xiaomi+Redmi+Note+14"
-    },
-    {
-      "url": "https://www.amazon.com/s?k=AirPods+Pro+3"
-    },
-    {
-      "url": "https://www.amazon.com/s?k=AirPods+4"
-    },
-    {
-      "url": "https://www.amazon.com/s?k=Galaxy+Buds3+Pro"
-    },
-    {
-      "url": "https://www.amazon.com/s?k=Apple+Watch+Series+11"
-    },
-    {
-      "url": "https://www.amazon.com/s?k=Apple+20W+USB-C+charger"
-    },
-    {
-      "url": "https://www.amazon.com/s?k=Apple+MagSafe+charger"
+      "url": "https://www.amazon.com/s?k=Anker+USB-C+to+Lightning+cable"
     },
     {
       "url": "https://www.amazon.com/s?k=Anker+power+bank+10000mAh"
     },
     {
-      "url": "https://www.amazon.com/s?k=Spigen+iPhone+case"
+      "url": "https://www.amazon.com/s?k=Baseus+magnetic+power+bank"
     },
     {
       "url": "https://www.amazon.com/s?k=tempered+glass+screen+protector"
+    },
+    {
+      "url": "https://www.amazon.com/s?k=camera+lens+protector"
+    },
+    {
+      "url": "https://www.amazon.com/s?k=PopSockets+phone+grip"
+    },
+    {
+      "url": "https://www.amazon.com/s?k=magnetic+car+phone+holder"
+    },
+    {
+      "url": "https://www.amazon.com/s?k=selfie+stick+tripod"
+    },
+    {
+      "url": "https://www.amazon.com/s?k=Spigen+AirPods+Pro+3+case"
+    },
+    {
+      "url": "https://www.amazon.com/s?k=AirPods+Pro+ear+tips"
+    },
+    {
+      "url": "https://www.amazon.com/s?k=USB-C+to+3.5mm+headphone+adapter"
+    },
+    {
+      "url": "https://www.amazon.com/s?k=earbuds+cleaning+pen"
     }
   ],
-  "maxItemsPerStartUrl": 3
+  "maxItemsPerStartUrl": 3,
+  "maxSearchPagesPerStartUrl": 1,
+  "scrapeProductDetails": false
 }

@@ -7,20 +7,29 @@
 // fetches today's USD rates from Frankfurter, and rewrites data.json.
 'use strict';
 
+const Logic = require('../logic.js');
+
 const VARIANTS = ['pro', 'max', 'ultra', 'plus', 'mini', 'fe', 'edge', 'lite', 'air', 'se'];
 const USED_SUBSTRINGS = ['renewed', 'refurbished', 'מחודש', 'יד שנייה'];
-const ACCESSORY_TERMS = ['case', 'cover', 'protector', 'charger', 'cable', 'bank', 'adapter', 'strap'];
+const ACCESSORY_TERMS = [
+  'case', 'cover', 'protector', 'charger', 'cable', 'bank', 'adapter', 'strap',
+  'grip', 'holder', 'tripod', 'stick', 'pen', 'tips', 'lens', 'mount', 'stand'
+];
 const ACCESSORY_TITLES = [
   'case for', 'cover for', 'for airpods', 'for iphone', 'for samsung', 'for galaxy', 'for apple', 'for pixel',
   'replacement', 'eartips', 'ear tips', 'protector', 'כיסוי', 'מגן'
 ];
-// Descriptive words in a search term that a matching title may phrase differently.
-const GENERIC = ['tempered', 'glass', 'screen', 'protector', 'power', 'bank', 'charger', 'case', 'usb-c', 'cable', 'wireless'];
+const STOPWORDS = ['to', 'for', 'with', 'and', 'of'];
+// Descriptive words a matching title may leave out. When a search has only
+// these, at least one of them must appear.
+const OPTIONAL = ['tempered', 'glass', 'screen', 'protector', 'usb-c', 'wireless', 'magnetic', 'phone', 'headphone', 'earbuds'];
 
 function norm(text) {
   return String(text == null ? '' : text)
     .toLowerCase()
     .replace(/(\d),(\d)/g, '$1$2') // 10,000mAh -> 10000mah
+    .replace(/(\d)\s*(ממ|מ"מ|מ״מ)/g, '$1mm') // 3.5 ממ -> 3.5mm
+    .replace(/\b(usb[\s-]?)?type[\s-]?c\b|\busb[\s-]c\b|\busbc\b/g, 'usb-c') // USB C, Type-C -> usb-c
     .replace(/\b([a-z]+\d+)\+/g, '$1 plus'); // S25+ -> s25 plus
 }
 
@@ -39,6 +48,16 @@ function hasToken(title, token) {
   return title.indexOf(token) !== -1 || title.replace(/\s+/g, '').indexOf(token) !== -1;
 }
 
+// A search word is in the title in English or as one of its Hebrew terms from
+// the dictionary shared with the search box ("power" / "bank" <- "סוללת גיבוי").
+function hebrewFor(word) {
+  return Logic.TERMS.filter((t) => t[1].split(' ').indexOf(word) !== -1).map((t) => t[0]);
+}
+
+function wordInTitle(title, word) {
+  return hasToken(title, word) || hebrewFor(word).some((h) => title.indexOf(h) !== -1);
+}
+
 function isAccessory(searchTerm) {
   const term = norm(searchTerm);
   return ACCESSORY_TERMS.some((w) => hasWord(term, w));
@@ -46,11 +65,11 @@ function isAccessory(searchTerm) {
 
 function matchesProduct(searchTerm, title, condition) {
   const t = norm(title);
-  const tokens = norm(searchTerm).split(/\s+/).filter(Boolean);
-  const required = tokens.filter((tok) => GENERIC.indexOf(tok) === -1);
+  const tokens = norm(searchTerm).split(/\s+/).filter((tok) => tok && STOPWORDS.indexOf(tok) === -1);
+  const required = tokens.filter((tok) => OPTIONAL.indexOf(tok) === -1);
 
-  if (!required.every((tok) => hasToken(t, tok))) return false;
-  if (!tokens.some((tok) => hasToken(t, tok))) return false;
+  if (!required.every((tok) => wordInTitle(t, tok))) return false;
+  if (!required.length && !tokens.some((tok) => wordInTitle(t, tok))) return false;
   if (USED_SUBSTRINGS.some((w) => t.indexOf(w) !== -1) || hasWord(t, 'used')) return false;
   if (condition && condition !== 'new') return false;
 

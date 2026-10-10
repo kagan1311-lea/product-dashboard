@@ -3,142 +3,196 @@
   "products": [
     {
       "id": 1,
-      "name_he": "אייפון 17 Pro",
-      "name_en": "iPhone 17 Pro",
-      "category": "טלפונים",
-      "search_term": "iPhone 17 Pro"
+      "name_he": "מטען Anker Nano 20W",
+      "name_en": "Anker Nano 20W Charger",
+      "category": "Chargers",
+      "search_term": "Anker Nano 20W charger"
     },
     {
       "id": 2,
-      "name_he": "אייפון 17",
-      "name_en": "iPhone 17",
-      "category": "טלפונים",
-      "search_term": "iPhone 17"
+      "name_he": "מטען אלחוטי Baseus",
+      "name_en": "Baseus Wireless Charger",
+      "category": "Chargers",
+      "search_term": "Baseus wireless charger"
     },
     {
       "id": 3,
-      "name_he": "סמסונג גלקסי S25 Ultra",
-      "name_en": "Samsung Galaxy S25 Ultra",
-      "category": "טלפונים",
-      "search_term": "Samsung Galaxy S25 Ultra"
+      "name_he": "כבל Ugreen USB-C",
+      "name_en": "Ugreen USB-C Cable",
+      "category": "Cables",
+      "search_term": "Ugreen USB-C cable"
     },
     {
       "id": 4,
-      "name_he": "סמסונג גלקסי S25",
-      "name_en": "Samsung Galaxy S25",
-      "category": "טלפונים",
-      "search_term": "Samsung Galaxy S25"
+      "name_he": "כבל Anker ללייטנינג",
+      "name_en": "Anker USB-C to Lightning Cable",
+      "category": "Cables",
+      "search_term": "Anker USB-C to Lightning cable"
     },
     {
       "id": 5,
-      "name_he": "גוגל פיקסל 10",
-      "name_en": "Google Pixel 10",
-      "category": "טלפונים",
-      "search_term": "Google Pixel 10"
-    },
-    {
-      "id": 6,
-      "name_he": "שיאומי רדמי נוט 14",
-      "name_en": "Xiaomi Redmi Note 14",
-      "category": "טלפונים",
-      "search_term": "Xiaomi Redmi Note 14"
-    },
-    {
-      "id": 7,
-      "name_he": "איירפודס פרו 3",
-      "name_en": "AirPods Pro 3",
-      "category": "אוזניות",
-      "search_term": "AirPods Pro 3"
-    },
-    {
-      "id": 8,
-      "name_he": "איירפודס 4",
-      "name_en": "AirPods 4",
-      "category": "אוזניות",
-      "search_term": "AirPods 4"
-    },
-    {
-      "id": 9,
-      "name_he": "גלקסי באדס 3 פרו",
-      "name_en": "Galaxy Buds3 Pro",
-      "category": "אוזניות",
-      "search_term": "Galaxy Buds3 Pro"
-    },
-    {
-      "id": 10,
-      "name_he": "אפל ווטש סדרה 11",
-      "name_en": "Apple Watch Series 11",
-      "category": "שעונים",
-      "search_term": "Apple Watch Series 11"
-    },
-    {
-      "id": 11,
-      "name_he": "מטען אפל 20W",
-      "name_en": "Apple 20W USB-C Charger",
-      "category": "מטענים",
-      "search_term": "Apple 20W USB-C charger"
-    },
-    {
-      "id": 12,
-      "name_he": "מטען MagSafe",
-      "name_en": "Apple MagSafe Charger",
-      "category": "מטענים",
-      "search_term": "Apple MagSafe charger"
-    },
-    {
-      "id": 13,
       "name_he": "סוללת גיבוי Anker",
       "name_en": "Anker Power Bank 10000mAh",
-      "category": "מטענים",
+      "category": "Power banks",
       "search_term": "Anker power bank 10000mAh"
     },
     {
+      "id": 6,
+      "name_he": "סוללת גיבוי מגנטית Baseus",
+      "name_en": "Baseus Magnetic Power Bank",
+      "category": "Power banks",
+      "search_term": "Baseus magnetic power bank"
+    },
+    {
+      "id": 7,
+      "name_he": "מגן מסך זכוכית",
+      "name_en": "Tempered Glass Screen Protector",
+      "category": "Protection",
+      "search_term": "tempered glass screen protector"
+    },
+    {
+      "id": 8,
+      "name_he": "מגן עדשת מצלמה",
+      "name_en": "Camera Lens Protector",
+      "category": "Protection",
+      "search_term": "camera lens protector"
+    },
+    {
+      "id": 9,
+      "name_he": "פופסוקט",
+      "name_en": "PopSockets Phone Grip",
+      "category": "Grips & holders",
+      "search_term": "PopSockets phone grip"
+    },
+    {
+      "id": 10,
+      "name_he": "מעמד מגנטי לרכב",
+      "name_en": "Magnetic Car Phone Holder",
+      "category": "Grips & holders",
+      "search_term": "magnetic car phone holder"
+    },
+    {
+      "id": 11,
+      "name_he": "מקל סלפי עם חצובה",
+      "name_en": "Selfie Stick Tripod",
+      "category": "Grips & holders",
+      "search_term": "selfie stick tripod"
+    },
+    {
+      "id": 12,
+      "name_he": "כיסוי Spigen ל-AirPods Pro 3",
+      "name_en": "Spigen AirPods Pro 3 Case",
+      "category": "Earbuds accessories",
+      "search_term": "Spigen AirPods Pro 3 case"
+    },
+    {
+      "id": 13,
+      "name_he": "כריות לאוזניות AirPods Pro",
+      "name_en": "AirPods Pro Ear Tips",
+      "category": "Earbuds accessories",
+      "search_term": "AirPods Pro ear tips"
+    },
+    {
       "id": 14,
-      "name_he": "כיסוי Spigen לאייפון",
-      "name_en": "Spigen iPhone Case",
-      "category": "כיסויים",
-      "search_term": "Spigen iPhone case"
+      "name_he": "מתאם USB-C לאוזניות",
+      "name_en": "USB-C to 3.5mm Headphone Adapter",
+      "category": "Earbuds accessories",
+      "search_term": "USB-C to 3.5mm headphone adapter"
     },
     {
       "id": 15,
-      "name_he": "מגן מסך זכוכית",
-      "name_en": "Tempered Glass Screen Protector",
-      "category": "מגיני מסך",
-      "search_term": "tempered glass screen protector"
+      "name_he": "עט ניקוי לאוזניות",
+      "name_en": "Earbuds Cleaning Pen",
+      "category": "Earbuds accessories",
+      "search_term": "earbuds cleaning pen"
     }
   ],
   "prices": [
     {
-      "product_id": 2,
+      "product_id": 1,
+      "source": "amazon",
+      "price_usd": 11.99,
+      "price_ils": null,
+      "rating": 4.8,
+      "reviews_count": 25200,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 1,
       "source": "google_il",
       "price_usd": null,
-      "price_ils": 2919,
+      "price_ils": 99,
       "rating": null,
       "reviews_count": 0,
       "updated_at": "2026-10-10"
     },
     {
-      "product_id": 3,
+      "product_id": 2,
+      "source": "amazon",
+      "price_usd": 31.99,
+      "price_ils": null,
+      "rating": 4.3,
+      "reviews_count": 510,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 2,
       "source": "aliexpress",
-      "price_usd": 828.34,
+      "price_usd": 31.24,
       "price_ils": null,
       "rating": 4.9,
       "reviews_count": 0,
       "updated_at": "2026-10-10"
     },
     {
+      "product_id": 2,
+      "source": "google_il",
+      "price_usd": null,
+      "price_ils": 132,
+      "rating": null,
+      "reviews_count": 0,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 3,
+      "source": "amazon",
+      "price_usd": 15.99,
+      "price_ils": null,
+      "rating": 4.9,
+      "reviews_count": 3159,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 3,
+      "source": "aliexpress",
+      "price_usd": 5.03,
+      "price_ils": null,
+      "rating": 4.9,
+      "reviews_count": 0,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 3,
+      "source": "google_il",
+      "price_usd": null,
+      "price_ils": 29,
+      "rating": null,
+      "reviews_count": 0,
+      "updated_at": "2026-10-10"
+    },
+    {
       "product_id": 4,
       "source": "amazon",
-      "price_usd": 695,
+      "price_usd": 25.99,
       "price_ils": null,
       "rating": 4.4,
-      "reviews_count": 46,
+      "reviews_count": 4856,
       "updated_at": "2026-10-10"
     },
     {
       "product_id": 4,
       "source": "aliexpress",
-      "price_usd": 558.66,
+      "price_usd": 6.7,
       "price_ils": null,
       "rating": 5,
       "reviews_count": 0,
@@ -148,139 +202,13 @@
       "product_id": 4,
       "source": "google_il",
       "price_usd": null,
-      "price_ils": 2199,
+      "price_ils": 76,
       "rating": null,
       "reviews_count": 0,
       "updated_at": "2026-10-10"
     },
     {
       "product_id": 5,
-      "source": "amazon",
-      "price_usd": 649,
-      "price_ils": null,
-      "rating": 4.4,
-      "reviews_count": 851,
-      "updated_at": "2026-10-10"
-    },
-    {
-      "product_id": 5,
-      "source": "google_il",
-      "price_usd": null,
-      "price_ils": 2720,
-      "rating": null,
-      "reviews_count": 0,
-      "updated_at": "2026-10-10"
-    },
-    {
-      "product_id": 6,
-      "source": "amazon",
-      "price_usd": 224.49,
-      "price_ils": null,
-      "rating": 4.5,
-      "reviews_count": 1502,
-      "updated_at": "2026-10-10"
-    },
-    {
-      "product_id": 6,
-      "source": "google_il",
-      "price_usd": null,
-      "price_ils": 820,
-      "rating": null,
-      "reviews_count": 0,
-      "updated_at": "2026-10-10"
-    },
-    {
-      "product_id": 7,
-      "source": "amazon",
-      "price_usd": 199,
-      "price_ils": null,
-      "rating": 4.4,
-      "reviews_count": 16240,
-      "updated_at": "2026-10-10"
-    },
-    {
-      "product_id": 7,
-      "source": "google_il",
-      "price_usd": null,
-      "price_ils": 749,
-      "rating": null,
-      "reviews_count": 0,
-      "updated_at": "2026-10-10"
-    },
-    {
-      "product_id": 8,
-      "source": "google_il",
-      "price_usd": null,
-      "price_ils": 400,
-      "rating": null,
-      "reviews_count": 0,
-      "updated_at": "2026-10-10"
-    },
-    {
-      "product_id": 9,
-      "source": "amazon",
-      "price_usd": 134.39,
-      "price_ils": null,
-      "rating": 4.4,
-      "reviews_count": 1261,
-      "updated_at": "2026-10-10"
-    },
-    {
-      "product_id": 9,
-      "source": "aliexpress",
-      "price_usd": 215.99,
-      "price_ils": null,
-      "rating": 4.8,
-      "reviews_count": 0,
-      "updated_at": "2026-10-10"
-    },
-    {
-      "product_id": 9,
-      "source": "google_il",
-      "price_usd": null,
-      "price_ils": 240,
-      "rating": null,
-      "reviews_count": 0,
-      "updated_at": "2026-10-10"
-    },
-    {
-      "product_id": 10,
-      "source": "google_il",
-      "price_usd": null,
-      "price_ils": 1379,
-      "rating": null,
-      "reviews_count": 0,
-      "updated_at": "2026-10-10"
-    },
-    {
-      "product_id": 11,
-      "source": "amazon",
-      "price_usd": 14.99,
-      "price_ils": null,
-      "rating": 4.8,
-      "reviews_count": 13577,
-      "updated_at": "2026-10-10"
-    },
-    {
-      "product_id": 12,
-      "source": "amazon",
-      "price_usd": 39.99,
-      "price_ils": null,
-      "rating": 4.6,
-      "reviews_count": 1865,
-      "updated_at": "2026-10-10"
-    },
-    {
-      "product_id": 12,
-      "source": "google_il",
-      "price_usd": null,
-      "price_ils": 294,
-      "rating": null,
-      "reviews_count": 0,
-      "updated_at": "2026-10-10"
-    },
-    {
-      "product_id": 13,
       "source": "amazon",
       "price_usd": 20.89,
       "price_ils": null,
@@ -289,16 +217,16 @@
       "updated_at": "2026-10-10"
     },
     {
-      "product_id": 13,
+      "product_id": 5,
       "source": "aliexpress",
-      "price_usd": 68.56,
+      "price_usd": 69.47,
       "price_ils": null,
-      "rating": null,
+      "rating": 3,
       "reviews_count": 0,
       "updated_at": "2026-10-10"
     },
     {
-      "product_id": 13,
+      "product_id": 5,
       "source": "google_il",
       "price_usd": null,
       "price_ils": 78,
@@ -307,20 +235,218 @@
       "updated_at": "2026-10-10"
     },
     {
-      "product_id": 14,
+      "product_id": 6,
       "source": "amazon",
-      "price_usd": 14.99,
+      "price_usd": 49.99,
+      "price_ils": null,
+      "rating": 4.4,
+      "reviews_count": 133,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 6,
+      "source": "aliexpress",
+      "price_usd": 17.8,
+      "price_ils": null,
+      "rating": 5,
+      "reviews_count": 0,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 6,
+      "source": "google_il",
+      "price_usd": null,
+      "price_ils": 229,
+      "rating": null,
+      "reviews_count": 0,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 7,
+      "source": "amazon",
+      "price_usd": 5.95,
       "price_ils": null,
       "rating": 4.6,
-      "reviews_count": 332345,
+      "reviews_count": 1149863,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 7,
+      "source": "aliexpress",
+      "price_usd": 1.6,
+      "price_ils": null,
+      "rating": null,
+      "reviews_count": 0,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 7,
+      "source": "google_il",
+      "price_usd": null,
+      "price_ils": 99,
+      "rating": null,
+      "reviews_count": 0,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 8,
+      "source": "amazon",
+      "price_usd": 6.88,
+      "price_ils": null,
+      "rating": 4.4,
+      "reviews_count": 57916,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 8,
+      "source": "aliexpress",
+      "price_usd": 1.19,
+      "price_ils": null,
+      "rating": 4.9,
+      "reviews_count": 0,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 9,
+      "source": "amazon",
+      "price_usd": 9.99,
+      "price_ils": null,
+      "rating": 4.6,
+      "reviews_count": 125064,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 9,
+      "source": "aliexpress",
+      "price_usd": 1.09,
+      "price_ils": null,
+      "rating": 4.6,
+      "reviews_count": 0,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 9,
+      "source": "google_il",
+      "price_usd": null,
+      "price_ils": 58,
+      "rating": null,
+      "reviews_count": 0,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 10,
+      "source": "amazon",
+      "price_usd": 9.99,
+      "price_ils": null,
+      "rating": 4.3,
+      "reviews_count": 69,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 10,
+      "source": "aliexpress",
+      "price_usd": 0.33,
+      "price_ils": null,
+      "rating": 4.9,
+      "reviews_count": 0,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 10,
+      "source": "google_il",
+      "price_usd": null,
+      "price_ils": 329,
+      "rating": null,
+      "reviews_count": 0,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 11,
+      "source": "amazon",
+      "price_usd": 18.99,
+      "price_ils": null,
+      "rating": 4.5,
+      "reviews_count": 4303,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 11,
+      "source": "aliexpress",
+      "price_usd": 6.08,
+      "price_ils": null,
+      "rating": 4.9,
+      "reviews_count": 0,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 11,
+      "source": "google_il",
+      "price_usd": null,
+      "price_ils": 119,
+      "rating": null,
+      "reviews_count": 0,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 12,
+      "source": "amazon",
+      "price_usd": 19.99,
+      "price_ils": null,
+      "rating": 4.6,
+      "reviews_count": 7187,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 12,
+      "source": "aliexpress",
+      "price_usd": 59.16,
+      "price_ils": null,
+      "rating": null,
+      "reviews_count": 0,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 12,
+      "source": "google_il",
+      "price_usd": null,
+      "price_ils": 89,
+      "rating": null,
+      "reviews_count": 0,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 13,
+      "source": "amazon",
+      "price_usd": 6.28,
+      "price_ils": null,
+      "rating": 4.5,
+      "reviews_count": 1252,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 14,
+      "source": "amazon",
+      "price_usd": 9,
+      "price_ils": null,
+      "rating": 4.6,
+      "reviews_count": 4889,
       "updated_at": "2026-10-10"
     },
     {
       "product_id": 14,
       "source": "aliexpress",
-      "price_usd": 7.21,
+      "price_usd": 1.31,
       "price_ils": null,
-      "rating": 4.9,
+      "rating": 4.7,
+      "reviews_count": 0,
+      "updated_at": "2026-10-10"
+    },
+    {
+      "product_id": 14,
+      "source": "google_il",
+      "price_usd": null,
+      "price_ils": 39,
+      "rating": null,
       "reviews_count": 0,
       "updated_at": "2026-10-10"
     },
@@ -329,196 +455,276 @@
       "source": "amazon",
       "price_usd": 6.99,
       "price_ils": null,
-      "rating": 4.6,
-      "reviews_count": 1149863,
-      "updated_at": "2026-10-10"
-    },
-    {
-      "product_id": 15,
-      "source": "aliexpress",
-      "price_usd": 3.75,
-      "price_ils": null,
-      "rating": 4.7,
-      "reviews_count": 0,
-      "updated_at": "2026-10-10"
-    },
-    {
-      "product_id": 15,
-      "source": "google_il",
-      "price_usd": null,
-      "price_ils": 9,
-      "rating": null,
-      "reviews_count": 0,
+      "rating": 4.5,
+      "reviews_count": 11721,
       "updated_at": "2026-10-10"
     }
   ],
   "history": [
     {
       "date": "2026-10-10",
+      "product_id": 1,
+      "source": "amazon",
+      "price_ils": 37,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
+      "product_id": 1,
+      "source": "google_il",
+      "price_ils": 99,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
+      "product_id": 2,
+      "source": "amazon",
+      "price_ils": 98,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
+      "product_id": 2,
+      "source": "aliexpress",
+      "price_ils": 96,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
       "product_id": 2,
       "source": "google_il",
-      "price_ils": 2919,
+      "price_ils": 132,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
+      "product_id": 3,
+      "source": "amazon",
+      "price_ils": 49,
       "usd_rate": 3.06
     },
     {
       "date": "2026-10-10",
       "product_id": 3,
       "source": "aliexpress",
-      "price_ils": 2535,
+      "price_ils": 15,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
+      "product_id": 3,
+      "source": "google_il",
+      "price_ils": 29,
       "usd_rate": 3.06
     },
     {
       "date": "2026-10-10",
       "product_id": 4,
       "source": "amazon",
-      "price_ils": 2127,
+      "price_ils": 80,
       "usd_rate": 3.06
     },
     {
       "date": "2026-10-10",
       "product_id": 4,
       "source": "aliexpress",
-      "price_ils": 1709,
+      "price_ils": 21,
       "usd_rate": 3.06
     },
     {
       "date": "2026-10-10",
       "product_id": 4,
       "source": "google_il",
-      "price_ils": 2199,
+      "price_ils": 76,
       "usd_rate": 3.06
     },
     {
       "date": "2026-10-10",
       "product_id": 5,
-      "source": "amazon",
-      "price_ils": 1986,
-      "usd_rate": 3.06
-    },
-    {
-      "date": "2026-10-10",
-      "product_id": 5,
-      "source": "google_il",
-      "price_ils": 2720,
-      "usd_rate": 3.06
-    },
-    {
-      "date": "2026-10-10",
-      "product_id": 6,
-      "source": "amazon",
-      "price_ils": 687,
-      "usd_rate": 3.06
-    },
-    {
-      "date": "2026-10-10",
-      "product_id": 6,
-      "source": "google_il",
-      "price_ils": 820,
-      "usd_rate": 3.06
-    },
-    {
-      "date": "2026-10-10",
-      "product_id": 7,
-      "source": "amazon",
-      "price_ils": 609,
-      "usd_rate": 3.06
-    },
-    {
-      "date": "2026-10-10",
-      "product_id": 7,
-      "source": "google_il",
-      "price_ils": 749,
-      "usd_rate": 3.06
-    },
-    {
-      "date": "2026-10-10",
-      "product_id": 8,
-      "source": "google_il",
-      "price_ils": 400,
-      "usd_rate": 3.06
-    },
-    {
-      "date": "2026-10-10",
-      "product_id": 9,
-      "source": "amazon",
-      "price_ils": 411,
-      "usd_rate": 3.06
-    },
-    {
-      "date": "2026-10-10",
-      "product_id": 9,
-      "source": "aliexpress",
-      "price_ils": 661,
-      "usd_rate": 3.06
-    },
-    {
-      "date": "2026-10-10",
-      "product_id": 9,
-      "source": "google_il",
-      "price_ils": 240,
-      "usd_rate": 3.06
-    },
-    {
-      "date": "2026-10-10",
-      "product_id": 10,
-      "source": "google_il",
-      "price_ils": 1379,
-      "usd_rate": 3.06
-    },
-    {
-      "date": "2026-10-10",
-      "product_id": 11,
-      "source": "amazon",
-      "price_ils": 46,
-      "usd_rate": 3.06
-    },
-    {
-      "date": "2026-10-10",
-      "product_id": 12,
-      "source": "amazon",
-      "price_ils": 122,
-      "usd_rate": 3.06
-    },
-    {
-      "date": "2026-10-10",
-      "product_id": 12,
-      "source": "google_il",
-      "price_ils": 294,
-      "usd_rate": 3.06
-    },
-    {
-      "date": "2026-10-10",
-      "product_id": 13,
       "source": "amazon",
       "price_ils": 64,
       "usd_rate": 3.06
     },
     {
       "date": "2026-10-10",
-      "product_id": 13,
+      "product_id": 5,
       "source": "aliexpress",
-      "price_ils": 210,
+      "price_ils": 213,
       "usd_rate": 3.06
     },
     {
       "date": "2026-10-10",
-      "product_id": 13,
+      "product_id": 5,
       "source": "google_il",
       "price_ils": 78,
       "usd_rate": 3.06
     },
     {
       "date": "2026-10-10",
+      "product_id": 6,
+      "source": "amazon",
+      "price_ils": 153,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
+      "product_id": 6,
+      "source": "aliexpress",
+      "price_ils": 54,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
+      "product_id": 6,
+      "source": "google_il",
+      "price_ils": 229,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
+      "product_id": 7,
+      "source": "amazon",
+      "price_ils": 18,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
+      "product_id": 7,
+      "source": "aliexpress",
+      "price_ils": 5,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
+      "product_id": 7,
+      "source": "google_il",
+      "price_ils": 99,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
+      "product_id": 8,
+      "source": "amazon",
+      "price_ils": 21,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
+      "product_id": 8,
+      "source": "aliexpress",
+      "price_ils": 4,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
+      "product_id": 9,
+      "source": "amazon",
+      "price_ils": 31,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
+      "product_id": 9,
+      "source": "aliexpress",
+      "price_ils": 3,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
+      "product_id": 9,
+      "source": "google_il",
+      "price_ils": 58,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
+      "product_id": 10,
+      "source": "amazon",
+      "price_ils": 31,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
+      "product_id": 10,
+      "source": "aliexpress",
+      "price_ils": 1,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
+      "product_id": 10,
+      "source": "google_il",
+      "price_ils": 329,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
+      "product_id": 11,
+      "source": "amazon",
+      "price_ils": 58,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
+      "product_id": 11,
+      "source": "aliexpress",
+      "price_ils": 19,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
+      "product_id": 11,
+      "source": "google_il",
+      "price_ils": 119,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
+      "product_id": 12,
+      "source": "amazon",
+      "price_ils": 61,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
+      "product_id": 12,
+      "source": "aliexpress",
+      "price_ils": 181,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
+      "product_id": 12,
+      "source": "google_il",
+      "price_ils": 89,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
+      "product_id": 13,
+      "source": "amazon",
+      "price_ils": 19,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
       "product_id": 14,
       "source": "amazon",
-      "price_ils": 46,
+      "price_ils": 28,
       "usd_rate": 3.06
     },
     {
       "date": "2026-10-10",
       "product_id": 14,
       "source": "aliexpress",
-      "price_ils": 22,
+      "price_ils": 4,
+      "usd_rate": 3.06
+    },
+    {
+      "date": "2026-10-10",
+      "product_id": 14,
+      "source": "google_il",
+      "price_ils": 39,
       "usd_rate": 3.06
     },
     {
@@ -526,20 +732,6 @@
       "product_id": 15,
       "source": "amazon",
       "price_ils": 21,
-      "usd_rate": 3.06
-    },
-    {
-      "date": "2026-10-10",
-      "product_id": 15,
-      "source": "aliexpress",
-      "price_ils": 11,
-      "usd_rate": 3.06
-    },
-    {
-      "date": "2026-10-10",
-      "product_id": 15,
-      "source": "google_il",
-      "price_ils": 9,
       "usd_rate": 3.06
     }
   ]
