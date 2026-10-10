@@ -4,11 +4,11 @@ Repo: https://github.com/kagan1311-lea/product-dashboard
 
 Live demo (GitHub Pages): https://kagan1311-lea.github.io/product-dashboard/
 
-A static, single-page dashboard for a phone and accessories store. Pick a product and see its price on Amazon, AliExpress and Google Shopping Israel, converted to shekels at today's USD/ILS rate, with the cheapest source marked and a one-line buy-abroad-or-locally verdict. Hebrew (RTL) UI, vanilla HTML/CSS/JS, no server and no API keys in the code.
+A static, single-page dashboard for a store selling phone and earbuds accessories (15 products: chargers, cables, power banks, protection, grips and holders, earbuds accessories). Pick a product and see its price on Amazon, AliExpress and Google Shopping Israel, converted to shekels at today's USD/ILS rate, with the cheapest source marked and a one-line buy-abroad-or-locally verdict. Hebrew (RTL) UI, vanilla HTML/CSS/JS, no server and no API keys in the code.
 
 ## Features
 
-- Product search with autocomplete (Hebrew or English, highlighted matches, keyboard navigation) and a "not found" message
+- Product search with autocomplete: the list is in English; Hebrew words are translated through a built-in term dictionary ("מטען" → charger). Highlighted matches, keyboard navigation, and a "not found" message
 - KPI cards: cheapest price, gap from the local price, weighted rating, USD/ILS rate
 - Price cards per source, cheapest marked; "no data" when a source has no match
 - Decision banner: order abroad (and how much you save) or buy locally

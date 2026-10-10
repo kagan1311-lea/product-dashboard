@@ -137,10 +137,10 @@
   <div class="search">
     <label class="search-box">
       <i class="ti ti-search" aria-hidden="true"></i>
-      <input id="q" type="text" autocomplete="off" placeholder="חפשי מוצר…" aria-label="חיפוש מוצר" aria-controls="list" aria-expanded="false">
+      <input id="q" type="text" dir="auto" autocomplete="off" placeholder="חפשי מוצר…" aria-label="חיפוש מוצר" aria-controls="list" aria-expanded="false">
       <span class="count" id="count"></span>
     </label>
-    <div class="list" id="list" role="listbox" hidden></div>
+    <div class="list" id="list" role="listbox" dir="ltr" hidden></div>
     <div class="notfound" id="notfound" role="status" hidden></div>
   </div>
 
@@ -156,8 +156,8 @@
   var SOURCE_LABELS = { amazon: 'Amazon', aliexpress: 'AliExpress', google_il: 'Google Shopping IL' };
   var SOURCE_ICONS = { amazon: 'ti-brand-amazon', aliexpress: 'ti-shopping-bag', google_il: 'ti-brand-google' };
   var CATEGORY_ICONS = {
-    'טלפונים': 'ti-device-mobile', 'אוזניות': 'ti-headphones', 'שעונים': 'ti-device-watch',
-    'מטענים': 'ti-battery-charging', 'כיסויים': 'ti-shield', 'מגיני מסך': 'ti-square'
+    'Chargers': 'ti-plug', 'Cables': 'ti-usb', 'Power banks': 'ti-battery-charging',
+    'Protection': 'ti-shield', 'Grips & holders': 'ti-hand-grab', 'Earbuds accessories': 'ti-headphones'
   };
 
   var state = { data: null, rate: null, rateLive: false, rateDate: null, results: [], active: -1, series: null };
@@ -217,16 +217,15 @@
     el.notfound.hidden = true;
 
     var html = '';
+    // The list is in English; a Hebrew query highlights the English word it translates to.
     function marked(text) {
-      return Logic.highlightParts(text, query).map(function (part) {
+      return Logic.highlightName(text, query).map(function (part) {
         return part.match ? '<mark>' + esc(part.text) + '</mark>' : esc(part.text);
       }).join('');
     }
     function option(p, i) {
-      // Show the English name only when it is what matched.
-      var hit = Logic.highlightParts(p.name_he, query).length > 1 || !query.trim();
       return '<div class="option" role="option" id="opt-' + i + '" data-id="' + esc(p.id) + '">' +
-        '<span>' + marked(p.name_he) + (hit ? '' : ' <span class="en">' + marked(p.name_en) + '</span>') + '</span>' +
+        '<span>' + marked(p.name_en) + '</span>' +
         '<span class="cat">' + esc(p.category) + '</span></div>';
     }
     if (!query.trim()) {
@@ -259,7 +258,7 @@
   function select(id) {
     var p = state.data.products.filter(function (x) { return String(x.id) === String(id); })[0];
     if (!p) return;
-    el.q.value = p.name_he;
+    el.q.value = p.name_en;
     el.notfound.hidden = true;
     openList(false);
     renderProduct(p);
@@ -310,7 +309,7 @@
     var local = rows.filter(function (r) { return r.source === 'google_il'; })[0];
 
     var html = '<div class="product-head"><i class="ti ' + (CATEGORY_ICONS[p.category] || 'ti-box') + '" aria-hidden="true"></i>' +
-      '<h2>' + esc(p.name_he) + '</h2><span>' + esc(p.name_en) + ' · ' + esc(p.category) + '</span></div>';
+      '<h2 dir="ltr">' + esc(p.name_en) + '</h2><span>' + esc(p.name_he) + ' · ' + esc(p.category) + '</span></div>';
 
     // KPIs
     html += '<div class="kpis">';
