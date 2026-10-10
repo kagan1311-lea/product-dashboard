@@ -40,6 +40,41 @@
     return (Math.round(result * 100) / 100).toFixed(2);
   }
 
+  // Spec: Done means / Should - 30-day rate chart.
+  // The date `days` days before `today` (a Date), as YYYY-MM-DD in UTC.
+  function daysAgo(today, days) {
+    var d = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - days));
+    return d.toISOString().slice(0, 10);
+  }
+
+  // Frankfurter time series -> [{ date, rate }] sorted by date; [] when the shape is wrong.
+  function rateSeries(json, currency) {
+    var rates = json && json.rates;
+    if (!rates || typeof rates !== 'object') return [];
+    return Object.keys(rates).sort().map(function (date) {
+      return { date: date, rate: rates[date] && rates[date][currency || 'ILS'] };
+    }).filter(function (p) { return typeof p.rate === 'number'; });
+  }
+
+  function seriesRange(series) {
+    if (!series.length) return null;
+    var rates = series.map(function (p) { return p.rate; });
+    return { min: Math.min.apply(null, rates), max: Math.max.apply(null, rates) };
+  }
+
+  // SVG polyline points: time runs left to right, the highest rate touches the top edge.
+  function chartPoints(series, width, height) {
+    var range = seriesRange(series);
+    if (!range) return '';
+    var span = range.max - range.min || 1;
+    var step = series.length > 1 ? width / (series.length - 1) : 0;
+    return series.map(function (p, i) {
+      var x = Math.round(i * step * 10) / 10;
+      var y = Math.round((height - ((p.rate - range.min) / span) * height) * 10) / 10;
+      return x + ',' + y;
+    }).join(' ');
+  }
+
   // Spec: Done means / Should - search. Splits text around the first case-insensitive
   // match of query, so the matched characters can be highlighted.
   function highlightParts(text, query) {
@@ -196,6 +231,10 @@
   return {
     SOURCES: SOURCES,
     groupByCategory: groupByCategory,
+    daysAgo: daysAgo,
+    rateSeries: rateSeries,
+    seriesRange: seriesRange,
+    chartPoints: chartPoints,
     parseAmount: parseAmount,
     convert: convert,
     highlightParts: highlightParts,

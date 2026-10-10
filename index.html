@@ -107,6 +107,11 @@
   .conv label span { color: var(--text-2); }
   .conv input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--text); font: inherit; font-size: 17px; font-weight: 500; text-align: left; }
   .card > .sub { margin-top: 8px; }
+  #rate-chart { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+  .chart-head { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; color: var(--text-2); }
+  .chart { display: block; width: 100%; height: 60px; margin-top: 6px; color: var(--blue); overflow: visible; }
+  .chart-axis { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-3); margin-top: 2px; }
+  .chart-note { font-size: 12px; color: var(--text-3); }
 
   .banner { display: flex; align-items: center; gap: 12px; margin-top: 14px; padding: 14px 16px; border-radius: 12px; }
   .banner i { font-size: 24px; }
@@ -150,7 +155,7 @@
     'מטענים': 'ti-battery-charging', 'כיסויים': 'ti-shield', 'מגיני מסך': 'ti-square'
   };
 
-  var state = { data: null, rate: null, rateLive: false, rateDate: null, results: [], active: -1 };
+  var state = { data: null, rate: null, rateLive: false, rateDate: null, results: [], active: -1, series: null };
   var el = {
     meta: document.getElementById('meta'),
     q: document.getElementById('q'),
@@ -349,7 +354,8 @@
       '<label><span>$</span><input id="conv-usd" type="text" inputmode="decimal" dir="ltr" aria-label="סכום בדולרים" value="' + esc(usd) + '"></label>' +
       '<i class="ti ti-arrows-left-right" aria-hidden="true"></i>' +
       '<label><span>₪</span><input id="conv-ils" type="text" inputmode="decimal" dir="ltr" aria-label="סכום בשקלים" value="' + esc(Logic.convert(usd, state.rate, 'usd')) + '"></label>' +
-      '</div><div class="sub">לפי שער ' + num(Logic.formatRate(state.rate)) + '</div></div></div>';
+      '</div><div class="sub">לפי שער ' + num(Logic.formatRate(state.rate)) + '</div>' +
+      '<div id="rate-chart">' + chartHtml() + '</div></div></div>';
 
     // decision banner
     var b;
@@ -375,6 +381,33 @@
       '<div class="sub">' + sub + '</div></div>';
   }
 
+  // ---------- 30-day rate chart ----------
+  function fetchSeries() {
+    var url = 'https://api.frankfurter.dev/v1/' + Logic.daysAgo(new Date(), 30) + '..?base=USD&symbols=ILS';
+    return fetch(url)
+      .then(function (r) { if (!r.ok) throw new Error('series ' + r.status); return r.json(); })
+      .then(function (j) { return Logic.rateSeries(j); })
+      .catch(function () { return []; });
+  }
+
+  function chartHtml() {
+    var s = state.series;
+    if (s === null) return '<div class="chart-note">טוען גרף…</div>';
+    if (s.length < 2) return '<div class="chart-note">הגרף לא זמין כרגע</div>';
+    var range = Logic.seriesRange(s);
+    var W = 300, H = 56;
+    return '<div class="chart-head"><span>שער 30 יום</span><span>' +
+      'נמוך ' + num(Logic.formatRate(range.min)) + ' · גבוה ' + num(Logic.formatRate(range.max)) + '</span></div>' +
+      '<svg class="chart" viewBox="-2 -2 ' + (W + 4) + ' ' + (H + 4) + '" preserveAspectRatio="none" role="img" aria-label="שער הדולר ב-30 הימים האחרונים">' +
+      '<polyline points="' + Logic.chartPoints(s, W, H) + '" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>' +
+      '<div class="chart-axis" dir="ltr"><span>' + esc(Logic.formatDate(s[0].date)) + '</span><span>' + esc(Logic.formatDate(s[s.length - 1].date)) + '</span></div>';
+  }
+
+  function updateChart() {
+    var box = document.getElementById('rate-chart');
+    if (box) box.innerHTML = chartHtml();
+  }
+
   el.content.addEventListener('input', function (e) {
     var id = e.target.id;
     if (id !== 'conv-usd' && id !== 'conv-ils') return;
@@ -387,6 +420,8 @@
   }
 
   // ---------- start ----------
+  fetchSeries().then(function (s) { state.series = s; updateChart(); });
+
   fetch('data.json')
     .then(function (r) { if (!r.ok) throw new Error('data ' + r.status); return r.json(); })
     .then(function (data) {
