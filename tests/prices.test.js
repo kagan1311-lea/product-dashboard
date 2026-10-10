@@ -1,10 +1,10 @@
-// Spec: Done means / 3-6. Demo data at a fixed rate of 3.70.
+// Spec: Done means / 3-6. Demo data at the fallback rate in data.json history (3.06).
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const Logic = require('../logic.js');
 const { prices, history } = require('../data.json');
 
-const RATE = 3.7;
+const RATE = 3.06;
 const AIRPODS_PRO = 7;
 const REDMI = 6;
 const MAGSAFE = 12;
@@ -17,11 +17,11 @@ test('3 rows come back, always amazon / aliexpress / google_il', () => {
 });
 
 test('abroad price in shekels = price_usd x rate, rounded to a whole shekel', () => {
-  assert.equal(Logic.toIls(249, RATE), 921);
-  assert.equal(Logic.toIls(199, RATE), 736);
+  assert.equal(Logic.toIls(249, RATE), 762);
+  assert.equal(Logic.toIls(199, RATE), 609);
   const amazon = bySource(rowsFor(AIRPODS_PRO), 'amazon');
   assert.equal(amazon.price_usd, 249);
-  assert.equal(amazon.price_ils, 921);
+  assert.equal(amazon.price_ils, 762);
 });
 
 test('google_il keeps its shekel price and has no dollar price', () => {
@@ -52,7 +52,7 @@ test('a source with no data is unavailable and left out of cheapest', () => {
 
 // 4. Live rate fallback
 test('fallback rate is the usd_rate of the latest history date', () => {
-  assert.equal(Logic.fallbackRate(history), 3.7);
+  assert.equal(Logic.fallbackRate(history), RATE);
   const shuffled = [
     { date: '2026-10-10', usd_rate: 3.7 },
     { date: '2026-10-08', usd_rate: 3.74 }
@@ -67,11 +67,20 @@ test('fallback rate is null when there is no history', () => {
 
 // 5. Decision banner
 test('abroad cheaper than local -> "abroad" with the source and the savings', () => {
-  assert.deepEqual(Logic.decision(rowsFor(AIRPODS_PRO)), { type: 'abroad', source: 'aliexpress', savings: 263 });
+  assert.deepEqual(Logic.decision(rowsFor(AIRPODS_PRO)), { type: 'abroad', source: 'aliexpress', savings: 390 });
 });
 
 test('local cheaper -> "local"', () => {
   assert.deepEqual(Logic.decision(rowsFor(REDMI)), { type: 'local' });
+});
+
+// Regression for #1: the demo must keep one product that is cheaper locally,
+// so the red banner can be shown with a realistic rate.
+test('at the history rate the demo still has a local-cheaper product', () => {
+  const local = require('../data.json').products.filter(
+    (p) => Logic.decision(Logic.priceRows(prices, p.id, Logic.fallbackRate(history))).type === 'local'
+  );
+  assert.ok(local.length >= 1);
 });
 
 test('equal prices -> "local"', () => {
@@ -103,8 +112,8 @@ test('no abroad price -> "none" with reason no_abroad', () => {
 
 // 6. KPI cards
 test('gap = local minus cheapest abroad, in shekels and whole percent', () => {
-  assert.deepEqual(Logic.gap(rowsFor(AIRPODS_PRO)), { ils: 263, pct: 26 });
-  assert.deepEqual(Logic.gap(rowsFor(REDMI)), { ils: -37, pct: -5 });
+  assert.deepEqual(Logic.gap(rowsFor(AIRPODS_PRO)), { ils: 390, pct: 39 });
+  assert.deepEqual(Logic.gap(rowsFor(REDMI)), { ils: -94, pct: -13 });
 });
 
 test('average rating is weighted by reviews_count, one decimal', () => {

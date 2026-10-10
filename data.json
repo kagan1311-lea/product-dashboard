@@ -38,8 +38,8 @@
     { "product_id": 5, "source": "aliexpress", "price_usd": 749, "price_ils": null, "rating": 4.2, "reviews_count": 98, "updated_at": "2026-10-10" },
     { "product_id": 5, "source": "google_il", "price_usd": null, "price_ils": 3490, "rating": null, "reviews_count": 0, "updated_at": "2026-10-10" },
 
-    { "product_id": 6, "source": "amazon", "price_usd": 219, "price_ils": null, "rating": 4.4, "reviews_count": 2105, "updated_at": "2026-10-10" },
-    { "product_id": 6, "source": "aliexpress", "price_usd": 199, "price_ils": null, "rating": 4.6, "reviews_count": 5320, "updated_at": "2026-10-10" },
+    { "product_id": 6, "source": "amazon", "price_usd": 279, "price_ils": null, "rating": 4.4, "reviews_count": 2105, "updated_at": "2026-10-10" },
+    { "product_id": 6, "source": "aliexpress", "price_usd": 259, "price_ils": null, "rating": 4.6, "reviews_count": 5320, "updated_at": "2026-10-10" },
     { "product_id": 6, "source": "google_il", "price_usd": null, "price_ils": 699, "rating": null, "reviews_count": 0, "updated_at": "2026-10-10" },
 
     { "product_id": 7, "source": "amazon", "price_usd": 249, "price_ils": null, "rating": 4.7, "reviews_count": 8640, "updated_at": "2026-10-10" },
@@ -78,11 +78,11 @@
     { "product_id": 15, "source": "google_il", "price_usd": null, "price_ils": 19, "rating": null, "reviews_count": 0, "updated_at": "2026-10-10" }
   ],
   "history": [
-    { "date": "2026-10-08", "product_id": 7, "source": "amazon", "price_ils": 931, "usd_rate": 3.74 },
-    { "date": "2026-10-09", "product_id": 7, "source": "amazon", "price_ils": 926, "usd_rate": 3.72 },
-    { "date": "2026-10-10", "product_id": 7, "source": "amazon", "price_ils": 921, "usd_rate": 3.70 },
-    { "date": "2026-10-08", "product_id": 1, "source": "amazon", "price_ils": 4110, "usd_rate": 3.74 },
-    { "date": "2026-10-09", "product_id": 1, "source": "amazon", "price_ils": 4088, "usd_rate": 3.72 },
-    { "date": "2026-10-10", "product_id": 1, "source": "amazon", "price_ils": 4066, "usd_rate": 3.70 }
+    { "date": "2026-10-08", "product_id": 7, "source": "amazon", "price_ils": 767, "usd_rate": 3.08 },
+    { "date": "2026-10-09", "product_id": 7, "source": "amazon", "price_ils": 764, "usd_rate": 3.07 },
+    { "date": "2026-10-10", "product_id": 7, "source": "amazon", "price_ils": 762, "usd_rate": 3.06 },
+    { "date": "2026-10-08", "product_id": 1, "source": "amazon", "price_ils": 3385, "usd_rate": 3.08 },
+    { "date": "2026-10-09", "product_id": 1, "source": "amazon", "price_ils": 3374, "usd_rate": 3.07 },
+    { "date": "2026-10-10", "product_id": 1, "source": "amazon", "price_ils": 3363, "usd_rate": 3.06 }
   ]
 }
